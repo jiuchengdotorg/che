@@ -31,8 +31,6 @@ import org.eclipse.che.ide.api.command.ContextualCommandManager;
 import org.eclipse.che.ide.api.command.PredefinedCommandGoalRegistry;
 import org.eclipse.che.ide.api.component.Component;
 import org.eclipse.che.ide.api.constraints.Constraints;
-import org.eclipse.che.ide.api.machine.events.WsAgentStateEvent;
-import org.eclipse.che.ide.api.machine.events.WsAgentStateHandler;
 import org.eclipse.che.ide.api.notification.NotificationManager;
 import org.eclipse.che.ide.api.parts.WorkspaceAgent;
 import org.eclipse.che.ide.api.parts.base.BasePresenter;
@@ -56,7 +54,6 @@ import static org.eclipse.che.ide.api.parts.PartStackType.NAVIGATION;
 @Singleton
 public class CommandsExplorerPresenter extends BasePresenter implements CommandsExplorerView.ActionDelegate,
                                                                         Component,
-                                                                        WsAgentStateHandler,
                                                                         ContextualCommandManager.CommandChangedListener,
                                                                         ContextualCommandManager.CommandLoadedListener {
 
@@ -186,28 +183,12 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
 
     @Override
     public void onCommandRemove(final ContextualCommand command) {
-        commandManager.removeCommand(command.getName()).then(new Operation<Void>() {
-            @Override
-            public void apply(Void arg) throws OperationException {
-                // TODO: select another command
-            }
-        }).catchError(new Operation<PromiseError>() {
+        commandManager.removeCommand(command.getName()).catchError(new Operation<PromiseError>() {
             @Override
             public void apply(PromiseError arg) throws OperationException {
                 notificationManager.notify("Unable to remove command", arg.getMessage(), FAIL, EMERGE_MODE);
             }
         });
-    }
-
-    @Override
-    public void onWsAgentStarted(WsAgentStateEvent event) {
-        // TODO: chose a better time to open Commands Explorer
-        workspaceAgent.openPart(this, NAVIGATION);
-        workspaceAgent.setActivePart(this);
-    }
-
-    @Override
-    public void onWsAgentStopped(WsAgentStateEvent event) {
     }
 
     @Override
