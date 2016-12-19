@@ -31,6 +31,7 @@ import org.eclipse.che.ide.api.command.CommandTypeRegistry;
 import org.eclipse.che.ide.api.machine.ExecAgentCommandManager;
 import org.eclipse.che.ide.api.machine.MachineServiceClient;
 import org.eclipse.che.ide.api.macro.MacroProcessor;
+import org.eclipse.che.ide.api.resources.Project;
 import org.eclipse.che.ide.api.workspace.WorkspaceServiceClient;
 import org.eclipse.che.ide.dto.DtoFactory;
 import org.eclipse.che.ide.extension.machine.client.outputspanel.console.CommandConsoleFactory;
@@ -102,7 +103,6 @@ public class CommandManagerImpl implements CommandManager {
         });
     }
 
-    @Override
     public List<CommandImpl> getCommands() {
         // return copy of the commands in order to prevent it modification directly
         List<CommandImpl> list = new ArrayList<>(commands.size());
@@ -113,7 +113,6 @@ public class CommandManagerImpl implements CommandManager {
         return list;
     }
 
-    @Override
     public Promise<CommandImpl> create(String type) {
         final CommandType commandType = commandTypeRegistry.getCommandTypeById(type);
 
@@ -127,7 +126,6 @@ public class CommandManagerImpl implements CommandManager {
         return add(command);
     }
 
-    @Override
     public Promise<CommandImpl> create(String desirableName, String commandLine, String type, Map<String, String> attributes) {
         final CommandType commandType = commandTypeRegistry.getCommandTypeById(type);
 
@@ -163,7 +161,6 @@ public class CommandManagerImpl implements CommandManager {
         });
     }
 
-    @Override
     public Promise<CommandImpl> update(final String commandName, final CommandImpl command) {
         final String name;
         if (commandName.equals(command.getName())) {
@@ -196,7 +193,6 @@ public class CommandManagerImpl implements CommandManager {
                                      });
     }
 
-    @Override
     public Promise<Void> remove(final String name) {
         return workspaceServiceClient.deleteCommand(appContext.getWorkspaceId(), name).then(new Function<WorkspaceDto, Void>() {
             @Override
@@ -205,6 +201,58 @@ public class CommandManagerImpl implements CommandManager {
                 return null;
             }
         });
+    }
+
+    @Override
+    public List<CommandImpl> getWorkspaceCommands() {
+        return null;
+    }
+
+    @Override
+    public Promise<CommandImpl> createWorkspaceCommand(String type) {
+        return null;
+    }
+
+    @Override
+    public Promise<CommandImpl> createWorkspaceCommand(String desirableName, String commandLine, String type,
+                                                       Map<String, String> attributes) {
+        return null;
+    }
+
+    @Override
+    public Promise<CommandImpl> updateWorkspaceCommand(String name, CommandImpl command) {
+        return null;
+    }
+
+    @Override
+    public Promise<Void> removeWorkspaceCommand(String commandName) {
+        return null;
+    }
+
+    @Override
+    public List<CommandImpl> getProjectCommands(Project project) {
+        return null;
+    }
+
+    @Override
+    public Promise<CommandImpl> createProjectCommand(Project project, String type) {
+        return null;
+    }
+
+    @Override
+    public Promise<CommandImpl> createProjectCommand(Project project, String desirableName, String commandLine, String type,
+                                                     Map<String, String> attributes) {
+        return null;
+    }
+
+    @Override
+    public Promise<CommandImpl> updateProjectCommand(Project project, String commandName, CommandImpl command) {
+        return null;
+    }
+
+    @Override
+    public Promise<Void> removeProjectCommand(Project project, String name) {
+        return null;
     }
 
     @Override

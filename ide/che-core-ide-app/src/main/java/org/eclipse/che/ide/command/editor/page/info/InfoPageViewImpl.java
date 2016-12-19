@@ -29,8 +29,8 @@ import org.eclipse.che.ide.api.command.CommandGoal;
 import org.eclipse.che.ide.api.resources.Project;
 import org.eclipse.che.ide.ui.listbox.CustomComboBox;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Implementation of {@link InfoPageView}.
@@ -66,7 +66,7 @@ public class InfoPageViewImpl extends Composite implements InfoPageView {
     }
 
     @Override
-    public void setAvailableGoals(List<CommandGoal> goals) {
+    public void setAvailableGoals(Set<CommandGoal> goals) {
         goal.clear();
 
         for (CommandGoal g : goals) {

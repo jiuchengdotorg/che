@@ -14,7 +14,11 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.google.inject.Inject;
 
 import org.eclipse.che.ide.api.app.AppContext;
+import org.eclipse.che.ide.api.command.BaseCommandGoal;
+import org.eclipse.che.ide.api.command.CommandGoal;
+import org.eclipse.che.ide.api.command.ContextualCommand;
 import org.eclipse.che.ide.api.command.ContextualCommand.ApplicableContext;
+import org.eclipse.che.ide.api.command.ContextualCommandManager;
 import org.eclipse.che.ide.api.command.PredefinedCommandGoalRegistry;
 import org.eclipse.che.ide.api.resources.Project;
 import org.eclipse.che.ide.command.editor.page.AbstractCommandEditorPage;
@@ -22,8 +26,10 @@ import org.eclipse.che.ide.command.editor.page.CommandEditorPage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static org.eclipse.che.api.workspace.shared.Constants.COMMAND_GOAL_ATTRIBUTE_NAME;
@@ -32,6 +38,7 @@ import static org.eclipse.che.api.workspace.shared.Constants.COMMAND_GOAL_ATTRIB
  * {@link CommandEditorPage} which allows to edit basic command's information, like:
  * <ul>
  * <li>name;</li>
+ * <li>goal;</li>
  * <li>applicable context.</li>
  * </ul>
  *
@@ -41,7 +48,8 @@ public class InfoPage extends AbstractCommandEditorPage implements InfoPageView.
 
     private final InfoPageView                  view;
     private final AppContext                    appContext;
-    private final PredefinedCommandGoalRegistry predefinedCommandGoalRegistry;
+    private final PredefinedCommandGoalRegistry goalRegistry;
+    private final ContextualCommandManager      commandManager;
 
     private final Map<Project, Boolean> projectsState;
 
@@ -56,12 +64,14 @@ public class InfoPage extends AbstractCommandEditorPage implements InfoPageView.
     @Inject
     public InfoPage(InfoPageView view,
                     AppContext appContext,
-                    PredefinedCommandGoalRegistry predefinedCommandGoalRegistry) {
+                    PredefinedCommandGoalRegistry predefinedCommandGoalRegistry,
+                    ContextualCommandManager contextualCommandManager) {
         super("Info", "General command info");
 
         this.view = view;
         this.appContext = appContext;
-        this.predefinedCommandGoalRegistry = predefinedCommandGoalRegistry;
+        this.goalRegistry = predefinedCommandGoalRegistry;
+        this.commandManager = contextualCommandManager;
 
         projectsState = new HashMap<>();
 
@@ -87,7 +97,13 @@ public class InfoPage extends AbstractCommandEditorPage implements InfoPageView.
         workspaceInitial = context.isWorkspaceApplicable();
         applicableProjectsInitial = new ArrayList<>(context.getApplicableProjects());
 
-        view.setAvailableGoals(predefinedCommandGoalRegistry.getAllGoals());
+        final Set<CommandGoal> goals = new HashSet<>();
+        goals.addAll(goalRegistry.getAllGoals());
+        goals.addAll(getCustomGoals());
+
+        view.setAvailableGoals(goals);
+
+
         view.setGoal(goalId);
         view.setCommandName(editedCommand.getName());
         view.setWorkspace(editedCommand.getApplicableContext().isWorkspaceApplicable());
@@ -151,10 +167,6 @@ public class InfoPage extends AbstractCommandEditorPage implements InfoPageView.
     }
 
     @Override
-    public void onProjectChanged(boolean value) {
-    }
-
-    @Override
     public void onApplicableProjectChanged(Project project, boolean value) {
         projectsState.put(project, value);
 
@@ -167,5 +179,20 @@ public class InfoPage extends AbstractCommandEditorPage implements InfoPageView.
         }
 
         notifyDirtyStateChanged();
+    }
+
+    /** Returns all custom (non-predefined) command goals. */
+    private Set<CommandGoal> getCustomGoals() {
+        final Set<CommandGoal> list = new HashSet<>();
+
+        for (ContextualCommand command : commandManager.getCommands()) {
+            final String goal = command.getAttributes().get(COMMAND_GOAL_ATTRIBUTE_NAME);
+
+            if (!isNullOrEmpty(goal)) {
+                list.add(new BaseCommandGoal(goal, goal));
+            }
+        }
+
+        return list;
     }
 }

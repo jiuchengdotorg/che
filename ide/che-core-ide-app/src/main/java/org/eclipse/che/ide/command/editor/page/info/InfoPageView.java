@@ -16,8 +16,8 @@ import org.eclipse.che.ide.api.command.CommandGoal;
 import org.eclipse.che.ide.api.mvp.View;
 import org.eclipse.che.ide.api.resources.Project;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * The view of {@link InfoPage}.
@@ -31,7 +31,7 @@ public interface InfoPageView extends View<InfoPageView.ActionDelegate> {
     void setCommandName(String name);
 
     /** Set the list of goals which are available to set for command. */
-    void setAvailableGoals(List<CommandGoal> goals);
+    void setAvailableGoals(Set<CommandGoal> goals);
 
     /** Sets the command's goal value. */
     void setGoal(String goal);
@@ -60,8 +60,6 @@ public interface InfoPageView extends View<InfoPageView.ActionDelegate> {
         void onNameChanged(String name);
 
         void onWorkspaceChanged(boolean value);
-
-        void onProjectChanged(boolean value);
 
         void onApplicableProjectChanged(Project project, boolean value);
     }
