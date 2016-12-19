@@ -10,13 +10,13 @@
  *******************************************************************************/
 package org.eclipse.che.ide.command.explorer;
 
+import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.google.web.bindery.event.shared.EventBus;
 
 import org.eclipse.che.api.promises.client.Operation;
 import org.eclipse.che.api.promises.client.OperationException;
@@ -29,6 +29,8 @@ import org.eclipse.che.ide.api.command.ContextualCommand;
 import org.eclipse.che.ide.api.command.ContextualCommand.ApplicableContext;
 import org.eclipse.che.ide.api.command.ContextualCommandManager;
 import org.eclipse.che.ide.api.command.PredefinedCommandGoalRegistry;
+import org.eclipse.che.ide.api.component.Component;
+import org.eclipse.che.ide.api.constraints.Constraints;
 import org.eclipse.che.ide.api.machine.events.WsAgentStateEvent;
 import org.eclipse.che.ide.api.machine.events.WsAgentStateHandler;
 import org.eclipse.che.ide.api.notification.NotificationManager;
@@ -53,8 +55,10 @@ import static org.eclipse.che.ide.api.parts.PartStackType.NAVIGATION;
  */
 @Singleton
 public class CommandsExplorerPresenter extends BasePresenter implements CommandsExplorerView.ActionDelegate,
+                                                                        Component,
                                                                         WsAgentStateHandler,
-                                                                        ContextualCommandManager.CommandChangedListener {
+                                                                        ContextualCommandManager.CommandChangedListener,
+                                                                        ContextualCommandManager.CommandLoadedListener {
 
     private static final String TITLE   = "Commands";
     private static final String TOOLTIP = "Manage commands";
@@ -74,7 +78,6 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
     public CommandsExplorerPresenter(CommandsExplorerView view,
                                      CommandsExplorerResources commandsExplorerResources,
                                      WorkspaceAgent workspaceAgent,
-                                     EventBus eventBus,
                                      ContextualCommandManager commandManager,
                                      PredefinedCommandGoalRegistry predefinedCommandGoalRegistry,
                                      NotificationManager notificationManager,
@@ -92,10 +95,17 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
         refreshViewTask = new RefreshViewTask();
 
         view.setDelegate(this);
+    }
 
-        eventBus.addHandler(WsAgentStateEvent.TYPE, this);
+    @Override
+    public void start(Callback<Component, Exception> callback) {
+        workspaceAgent.openPart(this, NAVIGATION, Constraints.LAST);
+        workspaceAgent.setActivePart(this);
 
+        commandManager.addCommandLoadedListener(this);
         commandManager.addCommandChangedListener(this);
+
+        callback.onSuccess(this);
     }
 
     @Override
@@ -198,6 +208,11 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
 
     @Override
     public void onWsAgentStopped(WsAgentStateEvent event) {
+    }
+
+    @Override
+    public void onCommandsLoaded() {
+        refreshView();
     }
 
     @Override

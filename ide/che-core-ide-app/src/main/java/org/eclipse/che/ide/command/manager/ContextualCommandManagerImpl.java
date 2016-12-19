@@ -27,12 +27,12 @@ import org.eclipse.che.api.promises.client.PromiseProvider;
 import org.eclipse.che.commons.annotation.Nullable;
 import org.eclipse.che.ide.api.app.AppContext;
 import org.eclipse.che.ide.api.command.CommandImpl;
-import org.eclipse.che.ide.api.command.ContextualCommandManager;
 import org.eclipse.che.ide.api.command.CommandType;
 import org.eclipse.che.ide.api.command.CommandTypeRegistry;
 import org.eclipse.che.ide.api.command.ContextualCommand;
 import org.eclipse.che.ide.api.command.ContextualCommand.ApplicableContext;
-import org.eclipse.che.ide.api.component.WsAgentComponent;
+import org.eclipse.che.ide.api.command.ContextualCommandManager;
+import org.eclipse.che.ide.api.component.Component;
 import org.eclipse.che.ide.api.resources.Project;
 import org.eclipse.che.ide.api.workspace.WorkspaceReadyEvent;
 
@@ -53,13 +53,16 @@ import static org.eclipse.che.api.workspace.shared.Constants.COMMAND_PREVIEW_URL
  * @author Artem Zatsarynnyi
  */
 @Singleton
-public class ContextualCommandManagerImpl implements ContextualCommandManager, WsAgentComponent, WorkspaceReadyEvent.WorkspaceReadyHandler {
+public class ContextualCommandManagerImpl implements ContextualCommandManager,
+                                                     Component,
+                                                     WorkspaceReadyEvent.WorkspaceReadyHandler {
 
     private final AppContext                      appContext;
     private final PromiseProvider                 promiseProvider;
     private final CommandTypeRegistry             commandTypeRegistry;
     private final ProjectCommandManagerDelegate   projectCommandManagerDelegate;
     private final WorkspaceCommandManagerDelegate workspaceCommandManagerDelegate;
+    private final EventBus                        eventBus;
 
     private final Map<String, ContextualCommand> commands;
     private final Set<CommandLoadedListener>     commandLoadedListeners;
@@ -77,17 +80,17 @@ public class ContextualCommandManagerImpl implements ContextualCommandManager, W
         this.commandTypeRegistry = commandTypeRegistry;
         this.projectCommandManagerDelegate = projectCommandManagerDelegate;
         this.workspaceCommandManagerDelegate = workspaceCommandManagerDelegate;
+        this.eventBus = eventBus;
 
         commands = new HashMap<>();
         commandLoadedListeners = new HashSet<>();
         commandChangedListeners = new HashSet<>();
-
-        eventBus.addHandler(WorkspaceReadyEvent.getType(), this);
     }
 
-    // TODO: just for eager instantiating
     @Override
-    public void start(Callback<WsAgentComponent, Exception> callback) {
+    public void start(Callback<Component, Exception> callback) {
+        eventBus.addHandler(WorkspaceReadyEvent.getType(), this);
+
         callback.onSuccess(this);
     }
 

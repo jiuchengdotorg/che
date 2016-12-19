@@ -25,13 +25,13 @@ import org.eclipse.che.ide.api.command.CommandTypeRegistry;
 import org.eclipse.che.ide.api.command.ContextualCommandManager;
 import org.eclipse.che.ide.api.command.PredefinedCommandGoalRegistry;
 import org.eclipse.che.ide.api.component.Component;
-import org.eclipse.che.ide.api.component.WsAgentComponent;
 import org.eclipse.che.ide.api.filetypes.FileType;
 import org.eclipse.che.ide.command.action.CommandGoalPopUpGroupFactory;
 import org.eclipse.che.ide.command.action.ContextualCommandActionFactory;
 import org.eclipse.che.ide.command.action.ContextualCommandActionManager;
 import org.eclipse.che.ide.command.explorer.CommandTypeChooserView;
 import org.eclipse.che.ide.command.explorer.CommandTypeChooserViewImpl;
+import org.eclipse.che.ide.command.explorer.CommandsExplorerPresenter;
 import org.eclipse.che.ide.command.explorer.CommandsExplorerView;
 import org.eclipse.che.ide.command.explorer.CommandsExplorerViewImpl;
 import org.eclipse.che.ide.command.goal.BuildGoal;
@@ -72,13 +72,10 @@ public class CommandApiModule extends AbstractGinModule {
         bind(ContextualCommandManager.class).to(ContextualCommandManagerImpl.class).in(Singleton.class);
 
         GinMapBinder<String, Component> componentBinder = GinMapBinder.newMapBinder(binder(), String.class, Component.class);
+        componentBinder.addBinding("ContextualCommandManagerImpl").to(ContextualCommandManagerImpl.class);
+        componentBinder.addBinding("CommandsExplorerPresenter").to(CommandsExplorerPresenter.class);
         componentBinder.addBinding("CommandProducerActionManager").to(CommandProducerActionManager.class);
         componentBinder.addBinding("ContextualCommandActionManager").to(ContextualCommandActionManager.class);
-
-        // start Command Manager on WS-agent starting in order to fetch all project related commands
-        GinMapBinder.newMapBinder(binder(), String.class, WsAgentComponent.class)
-                    .addBinding("Command Manager")
-                    .to(ContextualCommandManagerImpl.class);
 
         install(new GinFactoryModuleBuilder().build(ContextualCommandActionFactory.class));
         install(new GinFactoryModuleBuilder().build(CommandGoalPopUpGroupFactory.class));

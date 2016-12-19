@@ -15,7 +15,6 @@ import com.google.inject.Singleton;
 
 import org.eclipse.che.ide.api.action.AbstractPerspectiveAction;
 import org.eclipse.che.ide.api.action.ActionEvent;
-import org.eclipse.che.ide.command.explorer.CommandsExplorerPresenter;
 import org.eclipse.che.ide.extension.machine.client.MachineLocalizationConstant;
 import org.eclipse.che.ide.extension.machine.client.MachineResources;
 import org.eclipse.che.ide.extension.machine.client.command.edit.EditCommandsPresenter;
@@ -34,11 +33,10 @@ import static org.eclipse.che.ide.workspace.perspectives.project.ProjectPerspect
 public class EditCommandsAction extends AbstractPerspectiveAction {
 
     private final EditCommandsPresenter     editCommandsPresenter;
-    private final CommandsExplorerPresenter commandsExplorerPresenter;
 
     @Inject
     public EditCommandsAction(EditCommandsPresenter editCommandsPresenter,
-                              CommandsExplorerPresenter commandsExplorerPresenter,
+//                              CommandsExplorerPresenter commandsExplorerPresenter,
                               MachineLocalizationConstant localizationConstant,
                               MachineResources resources) {
         super(Collections.singletonList(PROJECT_PERSPECTIVE_ID),
@@ -48,7 +46,6 @@ public class EditCommandsAction extends AbstractPerspectiveAction {
               resources.editCommands());
 
         this.editCommandsPresenter = editCommandsPresenter;
-        this.commandsExplorerPresenter = commandsExplorerPresenter;
     }
 
     @Override
