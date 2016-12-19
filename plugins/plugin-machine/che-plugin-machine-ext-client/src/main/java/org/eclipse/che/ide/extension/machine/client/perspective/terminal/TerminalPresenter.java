@@ -71,7 +71,7 @@ public class TerminalPresenter implements TabPresenter, TerminalView.ActionDeleg
     private TerminalStateListener terminalStateListener;
 
     /**
-     * Indicates javascript term.js is injected in the page.
+     * Indicates javascript xterm.js is injected in the page.
      */
     private static boolean scriptInjected;
 
