@@ -11,6 +11,7 @@
 package org.eclipse.che.ide.command.explorer;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -80,7 +81,11 @@ public class CommandsExplorerViewImpl extends BaseView<CommandsExplorerView.Acti
             @Override
             public void onSelection(SelectionEvent<Node> event) {
                 for (Node node : tree.getNodeStorage().getAll()) {
-                    tree.getNodeDescriptor(node).getNodeContainerElement().removeAttribute("selected");
+                    final Element nodeContainerElement = tree.getNodeDescriptor(node).getNodeContainerElement();
+
+                    if (nodeContainerElement != null) {
+                        nodeContainerElement.removeAttribute("selected");
+                    }
                 }
 
                 tree.getNodeDescriptor(event.getSelectedItem()).getNodeContainerElement().setAttribute("selected", "selected");
