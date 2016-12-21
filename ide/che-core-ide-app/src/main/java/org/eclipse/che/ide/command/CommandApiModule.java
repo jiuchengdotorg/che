@@ -36,9 +36,10 @@ import org.eclipse.che.ide.command.explorer.CommandsExplorerView;
 import org.eclipse.che.ide.command.explorer.CommandsExplorerViewImpl;
 import org.eclipse.che.ide.command.goal.BuildGoal;
 import org.eclipse.che.ide.command.goal.CommonGoal;
-import org.eclipse.che.ide.command.goal.DebugGoal;
+import org.eclipse.che.ide.command.goal.DeployGoal;
 import org.eclipse.che.ide.command.goal.PredefinedCommandGoalRegistryImpl;
 import org.eclipse.che.ide.command.goal.RunGoal;
+import org.eclipse.che.ide.command.goal.TestGoal;
 import org.eclipse.che.ide.command.manager.ContextualCommandManagerImpl;
 import org.eclipse.che.ide.command.node.NodeFactory;
 import org.eclipse.che.ide.command.palette.CommandPaletteView;
@@ -62,9 +63,10 @@ public class CommandApiModule extends AbstractGinModule {
         // several goals are predefined
         GinMultibinder<CommandGoal> goalBinder = GinMultibinder.newSetBinder(binder(), CommandGoal.class);
         goalBinder.addBinding().to(CommonGoal.class);
+        goalBinder.addBinding().to(TestGoal.class);
         goalBinder.addBinding().to(BuildGoal.class);
         goalBinder.addBinding().to(RunGoal.class);
-        goalBinder.addBinding().to(DebugGoal.class);
+        goalBinder.addBinding().to(DeployGoal.class);
 
         bind(CommandTypeRegistry.class).to(CommandTypeRegistryImpl.class).in(Singleton.class);
         bind(PredefinedCommandGoalRegistry.class).to(PredefinedCommandGoalRegistryImpl.class).in(Singleton.class);

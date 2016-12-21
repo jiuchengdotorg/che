@@ -14,13 +14,13 @@ package org.eclipse.che.ide.command.goal;
 import org.eclipse.che.ide.api.command.BaseCommandGoal;
 
 /**
- * Represents predefined 'Debug' goal.
+ * Represents predefined 'Test' goal.
  *
  * @author Artem Zatsarynnyi
  */
-public class DebugGoal extends BaseCommandGoal {
+public class TestGoal extends BaseCommandGoal {
 
-    public DebugGoal() {
-        super("debug", "debug");
+    public TestGoal() {
+        super("test", "test");
     }
 }
