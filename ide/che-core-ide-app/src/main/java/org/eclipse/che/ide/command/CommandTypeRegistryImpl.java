@@ -11,6 +11,7 @@
 package org.eclipse.che.ide.command;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import org.eclipse.che.commons.annotation.Nullable;
 import org.eclipse.che.ide.api.command.CommandType;
@@ -30,6 +31,7 @@ import static java.util.Collections.unmodifiableList;
  *
  * @author Artem Zatsarynnyi
  */
+@Singleton
 public class CommandTypeRegistryImpl implements CommandTypeRegistry {
 
     private final Map<String, CommandType> commandTypes;
@@ -42,6 +44,7 @@ public class CommandTypeRegistryImpl implements CommandTypeRegistry {
     private void register(Set<CommandType> commandTypes) {
         for (CommandType type : commandTypes) {
             final String id = type.getId();
+
             if (this.commandTypes.containsKey(id)) {
                 Log.warn(getClass(), "Command type with ID " + id + " is already registered.");
             } else {

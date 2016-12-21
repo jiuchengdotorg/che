@@ -32,10 +32,11 @@ import static org.eclipse.che.ide.workspace.perspectives.project.ProjectPerspect
 @Singleton
 public class EditCommandsAction extends AbstractPerspectiveAction {
 
-    private final EditCommandsPresenter editCommandsPresenter;
+    private final EditCommandsPresenter     editCommandsPresenter;
 
     @Inject
     public EditCommandsAction(EditCommandsPresenter editCommandsPresenter,
+//                              CommandsExplorerPresenter commandsExplorerPresenter,
                               MachineLocalizationConstant localizationConstant,
                               MachineResources resources) {
         super(Collections.singletonList(PROJECT_PERSPECTIVE_ID),
@@ -55,5 +56,4 @@ public class EditCommandsAction extends AbstractPerspectiveAction {
     public void actionPerformed(ActionEvent e) {
         editCommandsPresenter.show();
     }
-
 }
