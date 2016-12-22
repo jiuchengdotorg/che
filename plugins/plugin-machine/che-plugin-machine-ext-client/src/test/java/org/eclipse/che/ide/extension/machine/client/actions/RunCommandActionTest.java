@@ -13,10 +13,12 @@ package org.eclipse.che.ide.extension.machine.client.actions;
 import org.eclipse.che.api.core.model.machine.Machine;
 import org.eclipse.che.ide.api.action.ActionEvent;
 import org.eclipse.che.ide.api.app.AppContext;
-import org.eclipse.che.ide.api.machine.DevMachine;
-import org.eclipse.che.ide.extension.machine.client.MachineLocalizationConstant;
 import org.eclipse.che.ide.api.command.CommandExecutor;
 import org.eclipse.che.ide.api.command.CommandImpl;
+import org.eclipse.che.ide.api.command.CommandManager;
+import org.eclipse.che.ide.api.command.ContextualCommand;
+import org.eclipse.che.ide.api.machine.DevMachine;
+import org.eclipse.che.ide.extension.machine.client.MachineLocalizationConstant;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,7 +45,7 @@ public class RunCommandActionTest {
 
     //constructors mocks
     @Mock
-    SelectCommandComboBox selectCommandAction;
+    CommandManager commandManager;
     @Mock
     private CommandExecutor             commandExecutor;
     @Mock
@@ -51,7 +53,7 @@ public class RunCommandActionTest {
     @Mock
     private ActionEvent                 event;
     @Mock
-    private CommandImpl                 command;
+    private ContextualCommand           command;
     @Mock
     private AppContext                  appContext;
 
@@ -61,7 +63,7 @@ public class RunCommandActionTest {
 
     @Before
     public void setUp() throws Exception {
-        when(selectCommandAction.getCommandByName(anyString())).thenReturn(command);
+        when(commandManager.getCommand(anyString())).thenReturn(command);
     }
 
     @Test
