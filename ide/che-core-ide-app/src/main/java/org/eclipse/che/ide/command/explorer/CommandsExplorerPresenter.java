@@ -11,7 +11,6 @@
 package org.eclipse.che.ide.command.explorer;
 
 import com.google.gwt.core.client.Callback;
-import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -107,13 +106,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
 
     @Override
     public void go(AcceptsOneWidget container) {
-        // FIXME: ws-agent may not be ready to fetching data
-        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-            @Override
-            public void execute() {
-                refreshView();
-            }
-        });
+        refreshView();
 
         container.setWidget(getView());
     }
