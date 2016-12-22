@@ -29,8 +29,8 @@ import org.eclipse.che.api.machine.shared.dto.execagent.event.ProcessStdOutEvent
 import org.eclipse.che.api.promises.client.Operation;
 import org.eclipse.che.api.promises.client.OperationException;
 import org.eclipse.che.api.promises.client.PromiseError;
+import org.eclipse.che.ide.api.command.CommandExecutor;
 import org.eclipse.che.ide.api.command.CommandImpl;
-import org.eclipse.che.ide.api.command.CommandManager;
 import org.eclipse.che.ide.api.machine.CommandOutputMessageUnmarshaller;
 import org.eclipse.che.ide.api.machine.ExecAgentCommandManager;
 import org.eclipse.che.ide.api.macro.MacroProcessor;
@@ -67,7 +67,7 @@ public class CommandOutputConsolePresenter implements CommandOutputConsole, Outp
     private final CommandImpl             command;
     private final EventBus                eventBus;
     private final Machine                 machine;
-    private final CommandManager          commandManager;
+    private final CommandExecutor         commandExecutor;
     private final AsyncRequestFactory     asyncRequestFactory;
     private final ExecAgentCommandManager execAgentCommandManager;
     private final MessageBus              messageBus;
@@ -90,7 +90,7 @@ public class CommandOutputConsolePresenter implements CommandOutputConsole, Outp
                                          DtoUnmarshallerFactory dtoUnmarshallerFactory,
                                          final MessageBusProvider messageBusProvider,
                                          MachineResources resources,
-                                         CommandManager commandManager,
+                                         CommandExecutor commandExecutor,
                                          MacroProcessor macroProcessor,
                                          EventBus eventBus,
                                          AsyncRequestFactory asyncRequestFactory,
@@ -106,7 +106,7 @@ public class CommandOutputConsolePresenter implements CommandOutputConsole, Outp
         this.command = command;
         this.machine = machine;
         this.eventBus = eventBus;
-        this.commandManager = commandManager;
+        this.commandExecutor = commandExecutor;
 
         view.setDelegate(this);
 
@@ -356,12 +356,12 @@ public class CommandOutputConsolePresenter implements CommandOutputConsole, Outp
     @Override
     public void reRunProcessButtonClicked() {
         if (isFinished()) {
-            commandManager.executeCommand(command, machine);
+            commandExecutor.executeCommand(command, machine);
         } else {
             execAgentCommandManager.killProcess(machine.getId(), pid).then(new Operation<ProcessKillResponseDto>() {
                 @Override
                 public void apply(ProcessKillResponseDto arg) throws OperationException {
-                    commandManager.executeCommand(command, machine);
+                    commandExecutor.executeCommand(command, machine);
                 }
             });
         }

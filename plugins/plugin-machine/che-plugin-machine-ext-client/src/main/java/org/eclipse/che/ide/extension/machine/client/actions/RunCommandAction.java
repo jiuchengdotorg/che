@@ -15,9 +15,9 @@ import com.google.inject.Inject;
 import org.eclipse.che.ide.api.action.Action;
 import org.eclipse.che.ide.api.action.ActionEvent;
 import org.eclipse.che.ide.api.app.AppContext;
+import org.eclipse.che.ide.api.command.CommandExecutor;
 import org.eclipse.che.ide.api.command.CommandImpl;
 import org.eclipse.che.ide.api.command.CommandManager;
-import org.eclipse.che.ide.api.command.ContextualCommandManager;
 import org.eclipse.che.ide.extension.machine.client.MachineLocalizationConstant;
 import org.eclipse.che.ide.util.loging.Log;
 
@@ -31,19 +31,19 @@ public class RunCommandAction extends Action {
 
     public static final String NAME_PARAM_ID = "name";
 
-    private final ContextualCommandManager    contextualCommandManager;
     private final CommandManager              commandManager;
+    private final CommandExecutor             commandExecutor;
     private final AppContext                  appContext;
     private final MachineLocalizationConstant localizationConstant;
 
     @Inject
-    public RunCommandAction(ContextualCommandManager contextualCommandManager,
+    public RunCommandAction(CommandManager commandManager,
                             MachineLocalizationConstant localizationConstant,
-                            CommandManager commandManager,
+                            CommandExecutor commandExecutor,
                             AppContext appContext) {
-        this.contextualCommandManager = contextualCommandManager;
-        this.localizationConstant = localizationConstant;
         this.commandManager = commandManager;
+        this.localizationConstant = localizationConstant;
+        this.commandExecutor = commandExecutor;
         this.appContext = appContext;
     }
 
@@ -60,9 +60,9 @@ public class RunCommandAction extends Action {
             return;
         }
 
-        final CommandImpl command = contextualCommandManager.getCommand(name);
+        final CommandImpl command = commandManager.getCommand(name);
         if (command != null) {
-            commandManager.executeCommand(command, appContext.getDevMachine().getDescriptor());
+            commandExecutor.executeCommand(command, appContext.getDevMachine().getDescriptor());
         }
     }
 

@@ -16,9 +16,9 @@ import com.google.inject.Inject;
 import org.eclipse.che.ide.api.app.AppContext;
 import org.eclipse.che.ide.api.command.BaseCommandGoal;
 import org.eclipse.che.ide.api.command.CommandGoal;
+import org.eclipse.che.ide.api.command.CommandManager;
 import org.eclipse.che.ide.api.command.ContextualCommand;
 import org.eclipse.che.ide.api.command.ContextualCommand.ApplicableContext;
-import org.eclipse.che.ide.api.command.ContextualCommandManager;
 import org.eclipse.che.ide.api.command.PredefinedCommandGoalRegistry;
 import org.eclipse.che.ide.api.resources.Project;
 import org.eclipse.che.ide.command.editor.EditorMessages;
@@ -50,7 +50,7 @@ public class InfoPage extends AbstractCommandEditorPage implements InfoPageView.
     private final InfoPageView                  view;
     private final AppContext                    appContext;
     private final PredefinedCommandGoalRegistry goalRegistry;
-    private final ContextualCommandManager      commandManager;
+    private final CommandManager                commandManager;
 
     private final Map<Project, Boolean> projectsState;
 
@@ -66,14 +66,14 @@ public class InfoPage extends AbstractCommandEditorPage implements InfoPageView.
     public InfoPage(InfoPageView view,
                     AppContext appContext,
                     PredefinedCommandGoalRegistry predefinedCommandGoalRegistry,
-                    ContextualCommandManager contextualCommandManager,
+                    CommandManager commandManager,
                     EditorMessages messages) {
         super(messages.pageInfoTitle(), messages.pageInfoTooltip());
 
         this.view = view;
         this.appContext = appContext;
         this.goalRegistry = predefinedCommandGoalRegistry;
-        this.commandManager = contextualCommandManager;
+        this.commandManager = commandManager;
 
         projectsState = new HashMap<>();
 

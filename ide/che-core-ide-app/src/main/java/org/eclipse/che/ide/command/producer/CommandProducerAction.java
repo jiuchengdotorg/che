@@ -17,7 +17,7 @@ import org.eclipse.che.api.core.model.machine.Machine;
 import org.eclipse.che.ide.api.action.Action;
 import org.eclipse.che.ide.api.action.ActionEvent;
 import org.eclipse.che.ide.api.command.CommandImpl;
-import org.eclipse.che.ide.api.command.CommandManager;
+import org.eclipse.che.ide.api.command.CommandExecutor;
 import org.eclipse.che.ide.api.command.CommandProducer;
 
 /**
@@ -30,18 +30,18 @@ public class CommandProducerAction extends Action {
 
     private final CommandProducer commandProducer;
     private final Machine         machine;
-    private final CommandManager  commandManager;
+    private final CommandExecutor commandExecutor;
 
     @Inject
     public CommandProducerAction(@Assisted String name,
                                  @Assisted CommandProducer commandProducer,
                                  @Assisted Machine machine,
-                                 CommandManager commandManager) {
+                                 CommandExecutor commandExecutor) {
         super(name);
 
         this.commandProducer = commandProducer;
         this.machine = machine;
-        this.commandManager = commandManager;
+        this.commandExecutor = commandExecutor;
     }
 
     @Override
@@ -52,6 +52,6 @@ public class CommandProducerAction extends Action {
     @Override
     public void actionPerformed(ActionEvent e) {
         CommandImpl command = commandProducer.createCommand(machine);
-        commandManager.executeCommand(command, machine);
+        commandExecutor.executeCommand(command, machine);
     }
 }

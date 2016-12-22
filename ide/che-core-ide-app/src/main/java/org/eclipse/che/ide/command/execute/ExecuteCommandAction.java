@@ -22,7 +22,7 @@ import org.eclipse.che.commons.annotation.Nullable;
 import org.eclipse.che.ide.api.action.Action;
 import org.eclipse.che.ide.api.action.ActionEvent;
 import org.eclipse.che.ide.api.app.AppContext;
-import org.eclipse.che.ide.api.command.CommandManager;
+import org.eclipse.che.ide.api.command.CommandExecutor;
 import org.eclipse.che.ide.api.command.ContextualCommand;
 import org.eclipse.che.ide.api.resources.Project;
 import org.eclipse.che.ide.api.resources.Resource;
@@ -42,14 +42,14 @@ import java.util.List;
 class ExecuteCommandAction extends Action {
 
     private final ContextualCommand command;
-    private final CommandManager    commandManager;
+    private final CommandExecutor   commandExecutor;
     private final AppContext        appContext;
     private final SelectionAgent    selectionAgent;
     private final MachineChooser    machineChooser;
 
     @Inject
     ExecuteCommandAction(@Assisted ContextualCommand command,
-                         CommandManager commandManager,
+                         CommandExecutor commandExecutor,
                          AppContext appContext,
                          SelectionAgent selectionAgent,
                          MachineChooser machineChooser,
@@ -57,7 +57,7 @@ class ExecuteCommandAction extends Action {
         super(command.getName());
 
         this.command = command;
-        this.commandManager = commandManager;
+        this.commandExecutor = commandExecutor;
         this.appContext = appContext;
         this.selectionAgent = selectionAgent;
         this.machineChooser = machineChooser;
@@ -109,12 +109,12 @@ class ExecuteCommandAction extends Action {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (isMachineSelected()) {
-            commandManager.executeCommand(command, getSelectedMachine());
+            commandExecutor.executeCommand(command, getSelectedMachine());
         } else {
             machineChooser.show().then(new Operation<Machine>() {
                 @Override
                 public void apply(Machine arg) throws OperationException {
-                    commandManager.executeCommand(command, arg);
+                    commandExecutor.executeCommand(command, arg);
                 }
             });
         }

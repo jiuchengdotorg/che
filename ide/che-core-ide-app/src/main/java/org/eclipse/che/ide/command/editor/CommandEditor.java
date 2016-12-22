@@ -21,8 +21,8 @@ import org.eclipse.che.api.promises.client.PromiseError;
 import org.eclipse.che.commons.annotation.Nullable;
 import org.eclipse.che.ide.CoreLocalizationConstant;
 import org.eclipse.che.ide.api.command.ContextualCommand;
-import org.eclipse.che.ide.api.command.ContextualCommandManager;
-import org.eclipse.che.ide.api.command.ContextualCommandManager.CommandChangedListener;
+import org.eclipse.che.ide.api.command.CommandManager;
+import org.eclipse.che.ide.api.command.CommandManager.CommandChangedListener;
 import org.eclipse.che.ide.api.dialogs.CancelCallback;
 import org.eclipse.che.ide.api.dialogs.ConfirmCallback;
 import org.eclipse.che.ide.api.dialogs.DialogFactory;
@@ -59,7 +59,7 @@ public class CommandEditor extends AbstractEditorPresenter implements CommandEdi
     private final CommandEditorView        view;
     private final WorkspaceAgent           workspaceAgent;
     private final IconRegistry             iconRegistry;
-    private final ContextualCommandManager commandManager;
+    private final CommandManager           commandManager;
     private final NotificationManager      notificationManager;
     private final DialogFactory            dialogFactory;
     private final EditorAgent              editorAgent;
@@ -77,7 +77,7 @@ public class CommandEditor extends AbstractEditorPresenter implements CommandEdi
     public CommandEditor(CommandEditorView view,
                          WorkspaceAgent workspaceAgent,
                          IconRegistry iconRegistry,
-                         ContextualCommandManager commandManager,
+                         CommandManager commandManager,
                          InfoPage infoPage,
                          ArgumentsPage argumentsPage,
                          PreviewUrlPage previewUrlPage,

@@ -20,9 +20,9 @@ import com.google.inject.name.Named;
 
 import org.eclipse.che.ide.Resources;
 import org.eclipse.che.ide.api.command.CommandGoal;
+import org.eclipse.che.ide.api.command.CommandManager;
 import org.eclipse.che.ide.api.command.CommandType;
 import org.eclipse.che.ide.api.command.CommandTypeRegistry;
-import org.eclipse.che.ide.api.command.ContextualCommandManager;
 import org.eclipse.che.ide.api.command.PredefinedCommandGoalRegistry;
 import org.eclipse.che.ide.api.component.Component;
 import org.eclipse.che.ide.api.filetypes.FileType;
@@ -44,7 +44,7 @@ import org.eclipse.che.ide.command.goal.DeployGoal;
 import org.eclipse.che.ide.command.goal.PredefinedCommandGoalRegistryImpl;
 import org.eclipse.che.ide.command.goal.RunGoal;
 import org.eclipse.che.ide.command.goal.TestGoal;
-import org.eclipse.che.ide.command.manager.ContextualCommandManagerImpl;
+import org.eclipse.che.ide.command.manager.CommandManagerImpl;
 import org.eclipse.che.ide.command.node.NodeFactory;
 import org.eclipse.che.ide.command.palette.CommandPaletteView;
 import org.eclipse.che.ide.command.palette.CommandPaletteViewImpl;
@@ -78,10 +78,10 @@ public class CommandApiModule extends AbstractGinModule {
         bind(CommandTypeRegistry.class).to(CommandTypeRegistryImpl.class).in(Singleton.class);
         bind(PredefinedCommandGoalRegistry.class).to(PredefinedCommandGoalRegistryImpl.class).in(Singleton.class);
 
-        bind(ContextualCommandManager.class).to(ContextualCommandManagerImpl.class).in(Singleton.class);
+        bind(CommandManager.class).to(CommandManagerImpl.class).in(Singleton.class);
 
         GinMapBinder<String, Component> componentBinder = GinMapBinder.newMapBinder(binder(), String.class, Component.class);
-        componentBinder.addBinding("ContextualCommandManagerImpl").to(ContextualCommandManagerImpl.class);
+        componentBinder.addBinding("CommandManagerImpl").to(CommandManagerImpl.class);
         componentBinder.addBinding("CommandsExplorerPresenter").to(CommandsExplorerPresenter.class);
         componentBinder.addBinding("CommandProducerActionManager").to(CommandProducerActionManager.class);
         componentBinder.addBinding("ExecuteCommandActionManager").to(ExecuteCommandActionManager.class);

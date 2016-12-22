@@ -27,14 +27,15 @@ import org.eclipse.che.api.promises.client.PromiseProvider;
 import org.eclipse.che.commons.annotation.Nullable;
 import org.eclipse.che.ide.api.app.AppContext;
 import org.eclipse.che.ide.api.command.CommandImpl;
+import org.eclipse.che.ide.api.command.CommandManager;
 import org.eclipse.che.ide.api.command.CommandType;
 import org.eclipse.che.ide.api.command.CommandTypeRegistry;
 import org.eclipse.che.ide.api.command.ContextualCommand;
 import org.eclipse.che.ide.api.command.ContextualCommand.ApplicableContext;
-import org.eclipse.che.ide.api.command.ContextualCommandManager;
 import org.eclipse.che.ide.api.component.Component;
 import org.eclipse.che.ide.api.resources.Project;
 import org.eclipse.che.ide.api.workspace.WorkspaceReadyEvent;
+import org.eclipse.che.ide.api.workspace.WorkspaceReadyEvent.WorkspaceReadyHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,14 +49,14 @@ import static org.eclipse.che.api.workspace.shared.Constants.COMMAND_GOAL_ATTRIB
 import static org.eclipse.che.api.workspace.shared.Constants.COMMAND_PREVIEW_URL_ATTRIBUTE_NAME;
 
 /**
- * Implementation of {@link ContextualCommandManager}.
+ * Implementation of {@link CommandManager}.
  *
  * @author Artem Zatsarynnyi
  */
 @Singleton
-public class ContextualCommandManagerImpl implements ContextualCommandManager,
-                                                     Component,
-                                                     WorkspaceReadyEvent.WorkspaceReadyHandler {
+public class CommandManagerImpl implements CommandManager,
+                                           Component,
+                                           WorkspaceReadyHandler {
 
     private final AppContext                      appContext;
     private final PromiseProvider                 promiseProvider;
@@ -69,12 +70,12 @@ public class ContextualCommandManagerImpl implements ContextualCommandManager,
     private final Set<CommandChangedListener>    commandChangedListeners;
 
     @Inject
-    public ContextualCommandManagerImpl(AppContext appContext,
-                                        PromiseProvider promiseProvider,
-                                        CommandTypeRegistry commandTypeRegistry,
-                                        ProjectCommandManagerDelegate projectCommandManagerDelegate,
-                                        WorkspaceCommandManagerDelegate workspaceCommandManagerDelegate,
-                                        EventBus eventBus) {
+    public CommandManagerImpl(AppContext appContext,
+                              PromiseProvider promiseProvider,
+                              CommandTypeRegistry commandTypeRegistry,
+                              ProjectCommandManagerDelegate projectCommandManagerDelegate,
+                              WorkspaceCommandManagerDelegate workspaceCommandManagerDelegate,
+                              EventBus eventBus) {
         this.appContext = appContext;
         this.promiseProvider = promiseProvider;
         this.commandTypeRegistry = commandTypeRegistry;

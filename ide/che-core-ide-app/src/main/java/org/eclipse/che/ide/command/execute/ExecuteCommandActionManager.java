@@ -19,9 +19,9 @@ import org.eclipse.che.ide.api.action.Action;
 import org.eclipse.che.ide.api.action.ActionManager;
 import org.eclipse.che.ide.api.action.DefaultActionGroup;
 import org.eclipse.che.ide.api.command.ContextualCommand;
-import org.eclipse.che.ide.api.command.ContextualCommandManager;
-import org.eclipse.che.ide.api.command.ContextualCommandManager.CommandChangedListener;
-import org.eclipse.che.ide.api.command.ContextualCommandManager.CommandLoadedListener;
+import org.eclipse.che.ide.api.command.CommandManager;
+import org.eclipse.che.ide.api.command.CommandManager.CommandChangedListener;
+import org.eclipse.che.ide.api.command.CommandManager.CommandLoadedListener;
 import org.eclipse.che.ide.api.command.PredefinedCommandGoalRegistry;
 import org.eclipse.che.ide.api.component.Component;
 
@@ -45,7 +45,7 @@ public class ExecuteCommandActionManager implements Component,
                                                     CommandLoadedListener,
                                                     CommandChangedListener {
 
-    private final ContextualCommandManager      commandManager;
+    private final CommandManager                commandManager;
     private final ActionManager                 actionManager;
     private final CommandsActionGroup           commandsActionGroup;
     private final GoalPopUpGroupFactory         goalPopUpGroupFactory;
@@ -56,7 +56,7 @@ public class ExecuteCommandActionManager implements Component,
     private final Map<String, DefaultActionGroup> commandGoalPopUpGroups;
 
     @Inject
-    public ExecuteCommandActionManager(ContextualCommandManager commandManager,
+    public ExecuteCommandActionManager(CommandManager commandManager,
                                        ActionManager actionManager,
                                        CommandsActionGroup commandsActionGroup,
                                        GoalPopUpGroupFactory goalPopUpGroupFactory,
