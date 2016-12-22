@@ -26,11 +26,15 @@ import org.eclipse.che.ide.api.command.ContextualCommandManager;
 import org.eclipse.che.ide.api.command.PredefinedCommandGoalRegistry;
 import org.eclipse.che.ide.api.component.Component;
 import org.eclipse.che.ide.api.filetypes.FileType;
+import org.eclipse.che.ide.command.editor.CommandEditorView;
+import org.eclipse.che.ide.command.editor.CommandEditorViewImpl;
+import org.eclipse.che.ide.command.editor.page.editable.PageWithEditorView;
+import org.eclipse.che.ide.command.editor.page.editable.PageWithEditorViewImpl;
+import org.eclipse.che.ide.command.editor.page.info.InfoPageView;
+import org.eclipse.che.ide.command.editor.page.info.InfoPageViewImpl;
 import org.eclipse.che.ide.command.execute.CommandGoalPopUpGroupFactory;
 import org.eclipse.che.ide.command.execute.ContextualCommandActionFactory;
 import org.eclipse.che.ide.command.execute.ContextualCommandActionManager;
-import org.eclipse.che.ide.command.type.CommandTypeChooserView;
-import org.eclipse.che.ide.command.type.CommandTypeChooserViewImpl;
 import org.eclipse.che.ide.command.explorer.CommandsExplorerPresenter;
 import org.eclipse.che.ide.command.explorer.CommandsExplorerView;
 import org.eclipse.che.ide.command.explorer.CommandsExplorerViewImpl;
@@ -46,6 +50,8 @@ import org.eclipse.che.ide.command.palette.CommandPaletteView;
 import org.eclipse.che.ide.command.palette.CommandPaletteViewImpl;
 import org.eclipse.che.ide.command.producer.CommandProducerActionFactory;
 import org.eclipse.che.ide.command.producer.CommandProducerActionManager;
+import org.eclipse.che.ide.command.type.CommandTypeChooserView;
+import org.eclipse.che.ide.command.type.CommandTypeChooserViewImpl;
 import org.eclipse.che.ide.command.type.CommandTypeRegistryImpl;
 
 import static org.eclipse.che.ide.command.node.CommandFileNode.FILE_TYPE_EXT;
@@ -61,7 +67,7 @@ public class CommandApiModule extends AbstractGinModule {
     protected void configure() {
         GinMultibinder.newSetBinder(binder(), CommandType.class);
 
-        // several goals are predefined
+        // predefined goals
         GinMultibinder<CommandGoal> goalBinder = GinMultibinder.newSetBinder(binder(), CommandGoal.class);
         goalBinder.addBinding().to(CommonGoal.class);
         goalBinder.addBinding().to(TestGoal.class);
@@ -88,6 +94,11 @@ public class CommandApiModule extends AbstractGinModule {
         bind(CommandsExplorerView.class).to(CommandsExplorerViewImpl.class).in(Singleton.class);
         bind(CommandTypeChooserView.class).to(CommandTypeChooserViewImpl.class);
         bind(CommandPaletteView.class).to(CommandPaletteViewImpl.class).in(Singleton.class);
+
+        // command editor
+        bind(CommandEditorView.class).to(CommandEditorViewImpl.class);
+        bind(InfoPageView.class).to(InfoPageViewImpl.class);
+        bind(PageWithEditorView.class).to(PageWithEditorViewImpl.class);
     }
 
     @Provides
@@ -97,6 +108,7 @@ public class CommandApiModule extends AbstractGinModule {
         return new FileType(resources.defaultImage(), FILE_TYPE_EXT);
     }
 
+    /** Provides the goal which is used for grouping commands which doesn't belong to any goal. */
     @Provides
     @Named("default")
     @Singleton

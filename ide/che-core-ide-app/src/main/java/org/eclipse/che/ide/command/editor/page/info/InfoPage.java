@@ -21,6 +21,7 @@ import org.eclipse.che.ide.api.command.ContextualCommand.ApplicableContext;
 import org.eclipse.che.ide.api.command.ContextualCommandManager;
 import org.eclipse.che.ide.api.command.PredefinedCommandGoalRegistry;
 import org.eclipse.che.ide.api.resources.Project;
+import org.eclipse.che.ide.command.editor.EditorMessages;
 import org.eclipse.che.ide.command.editor.page.AbstractCommandEditorPage;
 import org.eclipse.che.ide.command.editor.page.CommandEditorPage;
 
@@ -65,8 +66,9 @@ public class InfoPage extends AbstractCommandEditorPage implements InfoPageView.
     public InfoPage(InfoPageView view,
                     AppContext appContext,
                     PredefinedCommandGoalRegistry predefinedCommandGoalRegistry,
-                    ContextualCommandManager contextualCommandManager) {
-        super("Info", "General command info");
+                    ContextualCommandManager contextualCommandManager,
+                    EditorMessages messages) {
+        super(messages.pageInfoTitle(), messages.pageInfoTooltip());
 
         this.view = view;
         this.appContext = appContext;

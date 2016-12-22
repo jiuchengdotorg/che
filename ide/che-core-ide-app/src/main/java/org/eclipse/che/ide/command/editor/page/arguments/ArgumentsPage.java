@@ -14,6 +14,7 @@ import com.google.inject.Inject;
 
 import org.eclipse.che.ide.api.editor.defaulteditor.EditorBuilder;
 import org.eclipse.che.ide.api.filetypes.FileTypeRegistry;
+import org.eclipse.che.ide.command.editor.EditorMessages;
 import org.eclipse.che.ide.command.editor.page.CommandEditorPage;
 import org.eclipse.che.ide.command.editor.page.editable.AbstractPageWithEditor;
 import org.eclipse.che.ide.command.editor.page.editable.PageWithEditorView;
@@ -30,13 +31,14 @@ public class ArgumentsPage extends AbstractPageWithEditor {
     public ArgumentsPage(PageWithEditorView view,
                          EditorBuilder editorBuilder,
                          FileTypeRegistry fileTypeRegistry,
-                         MacroChooser macroChooser) {
+                         MacroChooser macroChooser,
+                         EditorMessages messages) {
         super(view,
               editorBuilder,
               fileTypeRegistry,
               macroChooser,
-              "Arguments",
-              "Command line");
+              messages.pageArgumentsTitle(),
+              messages.pageArgumentsTooltip());
     }
 
     @Override

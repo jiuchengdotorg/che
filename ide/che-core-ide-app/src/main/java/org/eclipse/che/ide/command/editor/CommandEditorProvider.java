@@ -24,10 +24,12 @@ import org.eclipse.che.ide.api.editor.EditorProvider;
 public class CommandEditorProvider implements EditorProvider {
 
     private final Provider<CommandEditor> editorProvider;
+    private final EditorMessages          editorMessages;
 
     @Inject
-    public CommandEditorProvider(Provider<CommandEditor> editorProvider) {
+    public CommandEditorProvider(Provider<CommandEditor> editorProvider, EditorMessages editorMessages) {
         this.editorProvider = editorProvider;
+        this.editorMessages = editorMessages;
     }
 
     @Override
@@ -37,7 +39,7 @@ public class CommandEditorProvider implements EditorProvider {
 
     @Override
     public String getDescription() {
-        return "Che Command Editor";
+        return editorMessages.editorDescription();
     }
 
     @Override

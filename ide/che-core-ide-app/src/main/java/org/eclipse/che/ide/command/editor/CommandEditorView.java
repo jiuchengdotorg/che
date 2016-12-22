@@ -11,7 +11,6 @@
 package org.eclipse.che.ide.command.editor;
 
 import com.google.gwt.user.client.ui.IsWidget;
-import com.google.inject.ImplementedBy;
 
 import org.eclipse.che.ide.api.mvp.View;
 
@@ -20,7 +19,6 @@ import org.eclipse.che.ide.api.mvp.View;
  *
  * @author Artem Zatsarynnyi
  */
-@ImplementedBy(CommandEditorViewImpl.class)
 public interface CommandEditorView extends View<CommandEditorView.ActionDelegate> {
 
     /**

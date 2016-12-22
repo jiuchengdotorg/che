@@ -14,6 +14,7 @@ import com.google.inject.Inject;
 
 import org.eclipse.che.ide.api.editor.defaulteditor.EditorBuilder;
 import org.eclipse.che.ide.api.filetypes.FileTypeRegistry;
+import org.eclipse.che.ide.command.editor.EditorMessages;
 import org.eclipse.che.ide.command.editor.page.CommandEditorPage;
 import org.eclipse.che.ide.command.editor.page.editable.AbstractPageWithEditor;
 import org.eclipse.che.ide.command.editor.page.editable.PageWithEditorView;
@@ -32,13 +33,14 @@ public class PreviewUrlPage extends AbstractPageWithEditor {
     public PreviewUrlPage(PageWithEditorView view,
                           EditorBuilder editorBuilder,
                           FileTypeRegistry fileTypeRegistry,
-                          MacroChooser macroChooser) {
+                          MacroChooser macroChooser,
+                          EditorMessages messages) {
         super(view,
               editorBuilder,
               fileTypeRegistry,
               macroChooser,
-              "Preview URL",
-              "Command preview URL");
+              messages.pagePreviewUrlTitle(),
+              messages.pagePreviewUrlTooltip());
     }
 
     @Override

@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.che.ide.command.editor.page.info;
 
-import com.google.inject.ImplementedBy;
-
 import org.eclipse.che.ide.api.command.CommandGoal;
 import org.eclipse.che.ide.api.mvp.View;
 import org.eclipse.che.ide.api.resources.Project;
@@ -24,7 +22,6 @@ import java.util.Set;
  *
  * @author Artem Zatsarynnyi
  */
-@ImplementedBy(InfoPageViewImpl.class)
 public interface InfoPageView extends View<InfoPageView.ActionDelegate> {
 
     /** Sets the command's name value. */

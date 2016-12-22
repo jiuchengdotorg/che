@@ -12,7 +12,6 @@
 package org.eclipse.che.ide.command.editor.page.editable;
 
 import com.google.gwt.user.client.ui.SimpleLayoutPanel;
-import com.google.inject.ImplementedBy;
 
 import org.eclipse.che.ide.api.mvp.View;
 
@@ -21,7 +20,6 @@ import org.eclipse.che.ide.api.mvp.View;
  *
  * @author Artem Zatsarynnyi
  */
-@ImplementedBy(PageWithEditorViewImpl.class)
 public interface PageWithEditorView extends View<PageWithEditorView.ActionDelegate> {
 
     /** Returns the container where the editor should be placed. */

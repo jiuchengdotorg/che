@@ -14,7 +14,7 @@ package org.eclipse.che.ide.command;
 import com.google.gwt.i18n.client.Messages;
 
 /**
- * I18n constants for the command related.
+ * I18n messages for the command-related UI.
  *
  * @author Artem Zatsarynnyi
  */
