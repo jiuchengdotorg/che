@@ -13,7 +13,7 @@ package org.eclipse.che.ide.command.editor;
 import com.google.gwt.i18n.client.Messages;
 
 /**
- * I18n messages for the command editor.
+ * I18n messages for the Command Editor.
  *
  * @author Artem Zatsarynnyi
  */

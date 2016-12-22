@@ -17,7 +17,6 @@ import com.google.inject.Singleton;
 import org.eclipse.che.commons.annotation.Nullable;
 import org.eclipse.che.ide.api.command.CommandType;
 import org.eclipse.che.ide.api.command.CommandTypeRegistry;
-import org.eclipse.che.ide.command.CommandLocalizationConstants;
 import org.eclipse.che.ide.util.loging.Log;
 
 import java.util.ArrayList;
@@ -36,12 +35,13 @@ import static java.util.Collections.unmodifiableList;
 @Singleton
 public class CommandTypeRegistryImpl implements CommandTypeRegistry {
 
-    private final CommandLocalizationConstants localizationConstants;
-    private final Map<String, CommandType>     commandTypes;
+    private final CommandTypeMessages messages;
+
+    private final Map<String, CommandType> commandTypes;
 
     @Inject
-    public CommandTypeRegistryImpl(CommandLocalizationConstants localizationConstants) {
-        this.localizationConstants = localizationConstants;
+    public CommandTypeRegistryImpl(CommandTypeMessages messages) {
+        this.messages = messages;
         this.commandTypes = new HashMap<>();
     }
 
@@ -51,7 +51,7 @@ public class CommandTypeRegistryImpl implements CommandTypeRegistry {
             final String id = type.getId();
 
             if (this.commandTypes.containsKey(id)) {
-                Log.warn(getClass(), localizationConstants.typeRegistryMessageAlreadyRegistered(id));
+                Log.warn(getClass(), messages.typeRegistryMessageAlreadyRegistered(id));
             } else {
                 this.commandTypes.put(id, type);
             }

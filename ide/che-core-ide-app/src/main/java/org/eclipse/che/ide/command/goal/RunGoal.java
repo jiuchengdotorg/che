@@ -14,7 +14,6 @@ package org.eclipse.che.ide.command.goal;
 import com.google.inject.Inject;
 
 import org.eclipse.che.ide.api.command.BaseCommandGoal;
-import org.eclipse.che.ide.command.CommandLocalizationConstants;
 
 /**
  * Represents predefined 'Run' goal.
@@ -24,7 +23,7 @@ import org.eclipse.che.ide.command.CommandLocalizationConstants;
 public class RunGoal extends BaseCommandGoal {
 
     @Inject
-    public RunGoal(CommandLocalizationConstants localizationConstants) {
-        super(localizationConstants.goalRunId(), localizationConstants.goalRunName());
+    public RunGoal(GoalMessages messages) {
+        super(messages.goalRunId(), messages.goalRunName());
     }
 }

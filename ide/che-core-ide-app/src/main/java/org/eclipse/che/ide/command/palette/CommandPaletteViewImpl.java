@@ -22,7 +22,6 @@ import com.google.inject.Singleton;
 
 import org.eclipse.che.ide.api.command.CommandGoal;
 import org.eclipse.che.ide.api.command.ContextualCommand;
-import org.eclipse.che.ide.command.CommandLocalizationConstants;
 import org.eclipse.che.ide.command.node.CommandGoalNode;
 import org.eclipse.che.ide.command.node.ExecutableCommandNode;
 import org.eclipse.che.ide.command.node.NodeFactory;
@@ -56,16 +55,16 @@ public class CommandPaletteViewImpl extends Window implements CommandPaletteView
     private ActionDelegate delegate;
 
     @Inject
-    public CommandPaletteViewImpl(NodeFactory nodeFactory, CommandLocalizationConstants localizationConstants) {
+    public CommandPaletteViewImpl(NodeFactory nodeFactory, PaletteMessages messages) {
         this.nodeFactory = nodeFactory;
 
         tree = new Tree(new NodeStorage(), new NodeLoader());
 
         setWidget(UI_BINDER.createAndBindUi(this));
 
-        setTitle(localizationConstants.paletteViewTitle());
+        setTitle(messages.viewTitle());
 
-        filterField.getElement().setAttribute("placeholder", localizationConstants.paletteFilterTooltip());
+        filterField.getElement().setAttribute("placeholder", messages.filterPlaceholder());
 
         // hide footer
         getFooter().removeFromParent();

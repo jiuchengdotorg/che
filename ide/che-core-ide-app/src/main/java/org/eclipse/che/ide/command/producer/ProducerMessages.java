@@ -8,22 +8,20 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
+package org.eclipse.che.ide.command.producer;
 
-package org.eclipse.che.ide.command.goal;
-
-import com.google.inject.Inject;
-
-import org.eclipse.che.ide.api.command.BaseCommandGoal;
+import com.google.gwt.i18n.client.Messages;
 
 /**
- * Represents predefined 'Deploy' goal.
+ * I18n messages for the command producers related UI.
  *
  * @author Artem Zatsarynnyi
  */
-public class DeployGoal extends BaseCommandGoal {
+public interface ProducerMessages extends Messages {
 
-    @Inject
-    public DeployGoal(GoalMessages messages) {
-        super(messages.goalDeployId(), messages.goalDeployName());
-    }
+    @Key("action.commands.title")
+    String actionCommandsTitle();
+
+    @Key("action.commands.description")
+    String actionCommandsDescription();
 }

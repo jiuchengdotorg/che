@@ -22,7 +22,6 @@ import org.eclipse.che.ide.api.command.CommandManager;
 import org.eclipse.che.ide.api.command.ContextualCommand;
 import org.eclipse.che.ide.api.command.ContextualCommandManager;
 import org.eclipse.che.ide.api.dialogs.DialogFactory;
-import org.eclipse.che.ide.command.CommandLocalizationConstants;
 import org.eclipse.che.ide.command.CommandUtils;
 import org.eclipse.che.ide.machine.chooser.MachineChooser;
 
@@ -40,14 +39,14 @@ import static org.eclipse.che.ide.util.StringUtils.containsIgnoreCase;
 @Singleton
 public class CommandPalettePresenter implements CommandPaletteView.ActionDelegate {
 
-    private final CommandPaletteView           view;
-    private final ContextualCommandManager     commandManager;
-    private final CommandManager               commandExecutor;
-    private final DialogFactory                dialogFactory;
-    private final AppContext                   appContext;
-    private final MachineChooser               machineChooser;
-    private final CommandUtils                 commandUtils;
-    private final CommandLocalizationConstants localizationConstants;
+    private final CommandPaletteView       view;
+    private final ContextualCommandManager commandManager;
+    private final CommandManager           commandExecutor;
+    private final DialogFactory            dialogFactory;
+    private final AppContext               appContext;
+    private final MachineChooser           machineChooser;
+    private final CommandUtils             commandUtils;
+    private final PaletteMessages          messages;
 
     @Inject
     public CommandPalettePresenter(CommandPaletteView view,
@@ -57,7 +56,7 @@ public class CommandPalettePresenter implements CommandPaletteView.ActionDelegat
                                    AppContext appContext,
                                    MachineChooser machineChooser,
                                    CommandUtils commandUtils,
-                                   CommandLocalizationConstants localizationConstants) {
+                                   PaletteMessages messages) {
         this.view = view;
         this.commandManager = commandManager;
         this.commandExecutor = commandExecutor;
@@ -65,7 +64,7 @@ public class CommandPalettePresenter implements CommandPaletteView.ActionDelegat
         this.appContext = appContext;
         this.machineChooser = machineChooser;
         this.commandUtils = commandUtils;
-        this.localizationConstants = localizationConstants;
+        this.messages = messages;
 
         view.setDelegate(this);
     }
@@ -101,7 +100,7 @@ public class CommandPalettePresenter implements CommandPaletteView.ActionDelegat
 
         if (getMachines().isEmpty()) {
             // should not happen, but let's play safe
-            dialogFactory.createMessageDialog("", localizationConstants.paletteMessageNoMachine(), null).show();
+            dialogFactory.createMessageDialog("", messages.messageNoMachine(), null).show();
         } else {
             machineChooser.show().then(new Operation<Machine>() {
                 @Override

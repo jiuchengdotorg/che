@@ -14,7 +14,6 @@ package org.eclipse.che.ide.command.goal;
 import com.google.inject.Inject;
 
 import org.eclipse.che.ide.api.command.BaseCommandGoal;
-import org.eclipse.che.ide.command.CommandLocalizationConstants;
 
 /**
  * Represents predefined 'Build' goal.
@@ -24,7 +23,7 @@ import org.eclipse.che.ide.command.CommandLocalizationConstants;
 public class BuildGoal extends BaseCommandGoal {
 
     @Inject
-    public BuildGoal(CommandLocalizationConstants localizationConstants) {
-        super(localizationConstants.goalBuildId(), localizationConstants.goalBuildName());
+    public BuildGoal(GoalMessages messages) {
+        super(messages.goalBuildId(), messages.goalBuildName());
     }
 }

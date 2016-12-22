@@ -14,7 +14,6 @@ package org.eclipse.che.ide.command.goal;
 import com.google.inject.Inject;
 
 import org.eclipse.che.ide.api.command.BaseCommandGoal;
-import org.eclipse.che.ide.command.CommandLocalizationConstants;
 
 /**
  * Represents predefined 'Common' goal.
@@ -25,7 +24,7 @@ import org.eclipse.che.ide.command.CommandLocalizationConstants;
 public class CommonGoal extends BaseCommandGoal {
 
     @Inject
-    public CommonGoal(CommandLocalizationConstants localizationConstants) {
-        super(localizationConstants.goalCommonId(), localizationConstants.goalCommonName());
+    public CommonGoal(GoalMessages messages) {
+        super(messages.goalCommonId(), messages.goalCommonName());
     }
 }

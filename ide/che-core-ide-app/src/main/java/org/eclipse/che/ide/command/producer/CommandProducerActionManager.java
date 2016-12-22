@@ -32,7 +32,6 @@ import org.eclipse.che.ide.api.machine.MachineServiceClient;
 import org.eclipse.che.ide.api.machine.events.MachineStateEvent;
 import org.eclipse.che.ide.api.machine.events.WsAgentStateEvent;
 import org.eclipse.che.ide.api.machine.events.WsAgentStateHandler;
-import org.eclipse.che.ide.command.CommandLocalizationConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,7 +65,7 @@ public class CommandProducerActionManager implements MachineStateEvent.Handler,
     private final AppContext                   appContext;
     private final MachineServiceClient         machineServiceClient;
     private final Resources                    resources;
-    private final CommandLocalizationConstants localizationConstants;
+    private final ProducerMessages             messages;
 
     private final List<Machine>                            machines;
     private final Set<CommandProducer>                     commandProducers;
@@ -83,13 +82,13 @@ public class CommandProducerActionManager implements MachineStateEvent.Handler,
                                         AppContext appContext,
                                         MachineServiceClient machineServiceClient,
                                         Resources resources,
-                                        CommandLocalizationConstants localizationConstants) {
+                                        ProducerMessages messages) {
         this.actionManager = actionManager;
         this.commandProducerActionFactory = commandProducerActionFactory;
         this.appContext = appContext;
         this.machineServiceClient = machineServiceClient;
         this.resources = resources;
-        this.localizationConstants = localizationConstants;
+        this.messages = messages;
 
         machines = new ArrayList<>();
         commandProducers = new HashSet<>();
@@ -105,10 +104,10 @@ public class CommandProducerActionManager implements MachineStateEvent.Handler,
     private void start(Set<CommandProducer> commandProducers) {
         this.commandProducers.addAll(commandProducers);
 
-        commandActionsPopUpGroup = new DefaultActionGroup(localizationConstants.producerActionTitle(), true, actionManager);
+        commandActionsPopUpGroup = new DefaultActionGroup(messages.actionCommandsTitle(), true, actionManager);
         actionManager.registerAction("commandActionsPopUpGroup", commandActionsPopUpGroup);
         commandActionsPopUpGroup.getTemplatePresentation().setSVGResource(resources.compile());
-        commandActionsPopUpGroup.getTemplatePresentation().setDescription(localizationConstants.producerActionDescription());
+        commandActionsPopUpGroup.getTemplatePresentation().setDescription(messages.actionCommandsDescription());
 
         DefaultActionGroup mainContextMenu = (DefaultActionGroup)actionManager.getAction(GROUP_MAIN_CONTEXT_MENU);
         mainContextMenu.add(commandActionsPopUpGroup);

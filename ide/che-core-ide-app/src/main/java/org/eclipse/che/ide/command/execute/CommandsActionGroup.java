@@ -21,7 +21,6 @@ import org.eclipse.che.ide.api.action.DefaultActionGroup;
 import org.eclipse.che.ide.api.resources.Resource;
 import org.eclipse.che.ide.api.selection.Selection;
 import org.eclipse.che.ide.api.selection.SelectionAgent;
-import org.eclipse.che.ide.command.CommandLocalizationConstants;
 import org.eclipse.che.ide.resources.tree.ResourceNode;
 
 /**
@@ -37,8 +36,8 @@ public class CommandsActionGroup extends DefaultActionGroup {
     @Inject
     public CommandsActionGroup(ActionManager actionManager,
                                SelectionAgent selectionAgent,
-                               CommandLocalizationConstants localizationConstants) {
-        super(localizationConstants.execActionTitle(), true, actionManager);
+                               ExecMessages messages) {
+        super(messages.actionCommandsTitle(), true, actionManager);
 
         this.selectionAgent = selectionAgent;
     }

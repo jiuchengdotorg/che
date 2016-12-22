@@ -21,7 +21,6 @@ import org.eclipse.che.api.promises.client.js.RejectFunction;
 import org.eclipse.che.api.promises.client.js.ResolveFunction;
 import org.eclipse.che.ide.api.command.CommandType;
 import org.eclipse.che.ide.api.command.CommandTypeRegistry;
-import org.eclipse.che.ide.command.CommandLocalizationConstants;
 
 import java.util.List;
 
@@ -33,10 +32,10 @@ import java.util.List;
  */
 public class CommandTypeChooser implements CommandTypeChooserView.ActionDelegate {
 
-    private final CommandTypeChooserView       view;
-    private final CommandTypeRegistry          commandTypeRegistry;
-    private final PromiseProvider              promiseProvider;
-    private final CommandLocalizationConstants localizationConstants;
+    private final CommandTypeChooserView view;
+    private final CommandTypeRegistry    commandTypeRegistry;
+    private final PromiseProvider        promiseProvider;
+    private final CommandTypeMessages    messages;
 
     private ResolveFunction<CommandType> resolveFunction;
     private RejectFunction               rejectFunction;
@@ -45,11 +44,11 @@ public class CommandTypeChooser implements CommandTypeChooserView.ActionDelegate
     public CommandTypeChooser(CommandTypeChooserView view,
                               CommandTypeRegistry commandTypeRegistry,
                               PromiseProvider promiseProvider,
-                              CommandLocalizationConstants localizationConstants) {
+                              CommandTypeMessages messages) {
         this.view = view;
         this.commandTypeRegistry = commandTypeRegistry;
         this.promiseProvider = promiseProvider;
-        this.localizationConstants = localizationConstants;
+        this.messages = messages;
 
         view.setDelegate(this);
     }
@@ -89,6 +88,6 @@ public class CommandTypeChooser implements CommandTypeChooserView.ActionDelegate
 
     @Override
     public void onCanceled() {
-        rejectFunction.apply(JsPromiseError.create(localizationConstants.typeChooserMessageCanceled()));
+        rejectFunction.apply(JsPromiseError.create(messages.typeChooserMessageCanceled()));
     }
 }

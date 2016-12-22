@@ -35,7 +35,6 @@ import org.eclipse.che.ide.api.constraints.Constraints;
 import org.eclipse.che.ide.api.notification.NotificationManager;
 import org.eclipse.che.ide.api.parts.WorkspaceAgent;
 import org.eclipse.che.ide.api.parts.base.BasePresenter;
-import org.eclipse.che.ide.command.CommandLocalizationConstants;
 import org.eclipse.che.ide.command.CommandResources;
 import org.eclipse.che.ide.command.CommandUtils;
 import org.eclipse.che.ide.command.type.CommandTypeChooser;
@@ -69,7 +68,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
     private final NotificationManager           notificationManager;
     private final CommandTypeChooser            commandTypeChooser;
     private final CommandUtils                  commandUtils;
-    private final CommandLocalizationConstants  messages;
+    private final ExplorerMessages              messages;
 
     private final RefreshViewTask refreshViewTask;
 
@@ -82,7 +81,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
                                      NotificationManager notificationManager,
                                      CommandTypeChooser commandTypeChooser,
                                      CommandUtils commandUtils,
-                                     CommandLocalizationConstants localizationConstants) {
+                                     ExplorerMessages messages) {
         this.view = view;
         this.resources = commandResources;
         this.workspaceAgent = workspaceAgent;
@@ -91,7 +90,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
         this.notificationManager = notificationManager;
         this.commandTypeChooser = commandTypeChooser;
         this.commandUtils = commandUtils;
-        this.messages = localizationConstants;
+        this.messages = messages;
 
         refreshViewTask = new RefreshViewTask();
 
