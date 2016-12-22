@@ -22,6 +22,7 @@ import org.eclipse.che.ide.api.command.CommandManager;
 import org.eclipse.che.ide.api.command.ContextualCommand;
 import org.eclipse.che.ide.api.command.ContextualCommandManager;
 import org.eclipse.che.ide.api.dialogs.DialogFactory;
+import org.eclipse.che.ide.command.CommandLocalizationConstants;
 import org.eclipse.che.ide.command.CommandUtils;
 import org.eclipse.che.ide.machine.chooser.MachineChooser;
 
@@ -39,13 +40,14 @@ import static org.eclipse.che.ide.util.StringUtils.containsIgnoreCase;
 @Singleton
 public class CommandPalettePresenter implements CommandPaletteView.ActionDelegate {
 
-    private final CommandPaletteView       view;
-    private final ContextualCommandManager commandManager;
-    private final CommandManager           commandExecutor;
-    private final DialogFactory            dialogFactory;
-    private final AppContext               appContext;
-    private final MachineChooser           machineChooser;
-    private final CommandUtils             commandUtils;
+    private final CommandPaletteView           view;
+    private final ContextualCommandManager     commandManager;
+    private final CommandManager               commandExecutor;
+    private final DialogFactory                dialogFactory;
+    private final AppContext                   appContext;
+    private final MachineChooser               machineChooser;
+    private final CommandUtils                 commandUtils;
+    private final CommandLocalizationConstants localizationConstants;
 
     @Inject
     public CommandPalettePresenter(CommandPaletteView view,
@@ -54,7 +56,8 @@ public class CommandPalettePresenter implements CommandPaletteView.ActionDelegat
                                    DialogFactory dialogFactory,
                                    AppContext appContext,
                                    MachineChooser machineChooser,
-                                   CommandUtils commandUtils) {
+                                   CommandUtils commandUtils,
+                                   CommandLocalizationConstants localizationConstants) {
         this.view = view;
         this.commandManager = commandManager;
         this.commandExecutor = commandExecutor;
@@ -62,6 +65,7 @@ public class CommandPalettePresenter implements CommandPaletteView.ActionDelegat
         this.appContext = appContext;
         this.machineChooser = machineChooser;
         this.commandUtils = commandUtils;
+        this.localizationConstants = localizationConstants;
 
         view.setDelegate(this);
     }
@@ -97,7 +101,7 @@ public class CommandPalettePresenter implements CommandPaletteView.ActionDelegat
 
         if (getMachines().isEmpty()) {
             // should not happen, but let's play safe
-            dialogFactory.createMessageDialog("", "No machine is available for executing command", null).show();
+            dialogFactory.createMessageDialog("", localizationConstants.paletteMessageNoMachine(), null).show();
         } else {
             machineChooser.show().then(new Operation<Machine>() {
                 @Override

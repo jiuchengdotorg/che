@@ -11,7 +11,10 @@
 
 package org.eclipse.che.ide.command.goal;
 
+import com.google.inject.Inject;
+
 import org.eclipse.che.ide.api.command.BaseCommandGoal;
+import org.eclipse.che.ide.command.CommandLocalizationConstants;
 
 /**
  * Represents predefined 'Deploy' goal.
@@ -20,7 +23,8 @@ import org.eclipse.che.ide.api.command.BaseCommandGoal;
  */
 public class DeployGoal extends BaseCommandGoal {
 
-    public DeployGoal() {
-        super("deploy", "deploy");
+    @Inject
+    public DeployGoal(CommandLocalizationConstants localizationConstants) {
+        super(localizationConstants.goalDeployId(), localizationConstants.goalDeployName());
     }
 }

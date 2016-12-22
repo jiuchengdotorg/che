@@ -33,7 +33,9 @@ import org.eclipse.che.ide.api.constraints.Constraints;
 import org.eclipse.che.ide.api.notification.NotificationManager;
 import org.eclipse.che.ide.api.parts.WorkspaceAgent;
 import org.eclipse.che.ide.api.parts.base.BasePresenter;
+import org.eclipse.che.ide.command.CommandLocalizationConstants;
 import org.eclipse.che.ide.command.CommandUtils;
+import org.eclipse.che.ide.command.type.CommandTypeChooser;
 import org.vectomatic.dom.svg.ui.SVGResource;
 
 import java.util.ArrayList;
@@ -56,9 +58,6 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
                                                                         ContextualCommandManager.CommandChangedListener,
                                                                         ContextualCommandManager.CommandLoadedListener {
 
-    private static final String TITLE   = "Commands";
-    private static final String TOOLTIP = "Manage commands";
-
     private final CommandsExplorerView          view;
     private final CommandsExplorerResources     resources;
     private final WorkspaceAgent                workspaceAgent;
@@ -67,6 +66,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
     private final NotificationManager           notificationManager;
     private final CommandTypeChooser            commandTypeChooser;
     private final CommandUtils                  commandUtils;
+    private final CommandLocalizationConstants  localizationConstants;
 
     private final RefreshViewTask refreshViewTask;
 
@@ -78,7 +78,8 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
                                      PredefinedCommandGoalRegistry predefinedCommandGoalRegistry,
                                      NotificationManager notificationManager,
                                      CommandTypeChooser commandTypeChooser,
-                                     CommandUtils commandUtils) {
+                                     CommandUtils commandUtils,
+                                     CommandLocalizationConstants localizationConstants) {
         this.view = view;
         this.resources = commandsExplorerResources;
         this.workspaceAgent = workspaceAgent;
@@ -87,6 +88,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
         this.notificationManager = notificationManager;
         this.commandTypeChooser = commandTypeChooser;
         this.commandUtils = commandUtils;
+        this.localizationConstants = localizationConstants;
 
         refreshViewTask = new RefreshViewTask();
 
@@ -113,7 +115,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
 
     @Override
     public String getTitle() {
-        return TITLE;
+        return localizationConstants.explorerPartTitle();
     }
 
     @Override
@@ -124,7 +126,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
     @Nullable
     @Override
     public String getTitleToolTip() {
-        return TOOLTIP;
+        return localizationConstants.explorerPartTooltip();
     }
 
     @Nullable
@@ -151,7 +153,10 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
                                   .catchError(new Operation<PromiseError>() {
                                       @Override
                                       public void apply(PromiseError arg) throws OperationException {
-                                          notificationManager.notify("Unable to create command", arg.getMessage(), FAIL, EMERGE_MODE);
+                                          notificationManager.notify(localizationConstants.explorerMessageUnableCreate(),
+                                                                     arg.getMessage(),
+                                                                     FAIL,
+                                                                     EMERGE_MODE);
                                       }
                                   });
                 }
@@ -160,7 +165,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
     }
 
     @Override
-    public void onCommandDuplicate(final ContextualCommand command) {
+    public void onCommandDuplicate(ContextualCommand command) {
         commandManager.createCommand(command).then(new Operation<ContextualCommand>() {
             @Override
             public void apply(ContextualCommand arg) throws OperationException {
@@ -169,17 +174,23 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
         }).catchError(new Operation<PromiseError>() {
             @Override
             public void apply(PromiseError arg) throws OperationException {
-                notificationManager.notify("Unable to duplicate command", arg.getMessage(), FAIL, EMERGE_MODE);
+                notificationManager.notify(localizationConstants.explorerMessageUnableDuplicate(),
+                                           arg.getMessage(),
+                                           FAIL,
+                                           EMERGE_MODE);
             }
         });
     }
 
     @Override
-    public void onCommandRemove(final ContextualCommand command) {
+    public void onCommandRemove(ContextualCommand command) {
         commandManager.removeCommand(command.getName()).catchError(new Operation<PromiseError>() {
             @Override
             public void apply(PromiseError arg) throws OperationException {
-                notificationManager.notify("Unable to remove command", arg.getMessage(), FAIL, EMERGE_MODE);
+                notificationManager.notify(localizationConstants.explorerMessageUnableRemove(),
+                                           arg.getMessage(),
+                                           FAIL,
+                                           EMERGE_MODE);
             }
         });
     }

@@ -9,7 +9,7 @@
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.che.ide.command.action;
+package org.eclipse.che.ide.command.execute;
 
 /**
  * Factory for creating {@link CommandGoalPopUpGroup} instances.

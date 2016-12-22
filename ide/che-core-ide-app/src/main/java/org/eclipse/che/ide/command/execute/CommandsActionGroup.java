@@ -9,7 +9,7 @@
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.che.ide.command.action;
+package org.eclipse.che.ide.command.execute;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -21,6 +21,7 @@ import org.eclipse.che.ide.api.action.DefaultActionGroup;
 import org.eclipse.che.ide.api.resources.Resource;
 import org.eclipse.che.ide.api.selection.Selection;
 import org.eclipse.che.ide.api.selection.SelectionAgent;
+import org.eclipse.che.ide.command.CommandLocalizationConstants;
 import org.eclipse.che.ide.resources.tree.ResourceNode;
 
 /**
@@ -34,8 +35,10 @@ public class CommandsActionGroup extends DefaultActionGroup {
     private final SelectionAgent selectionAgent;
 
     @Inject
-    public CommandsActionGroup(ActionManager actionManager, SelectionAgent selectionAgent) {
-        super("Commands", true, actionManager);
+    public CommandsActionGroup(ActionManager actionManager,
+                               SelectionAgent selectionAgent,
+                               CommandLocalizationConstants localizationConstants) {
+        super(localizationConstants.execActionTitle(), true, actionManager);
 
         this.selectionAgent = selectionAgent;
     }

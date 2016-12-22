@@ -43,6 +43,7 @@ class AbstractCommandNode extends SyntheticNode<ContextualCommand> {
         presentation.setPresentableText(getName());
 
         final SVGResource commandTypeIcon = commandUtils.getCommandTypeIcon(getData().getType());
+
         if (commandTypeIcon != null) {
             presentation.setPresentableIcon(commandTypeIcon);
         }

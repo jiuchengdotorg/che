@@ -9,7 +9,7 @@
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.che.ide.command.explorer;
+package org.eclipse.che.ide.command.type;
 
 import com.google.inject.Inject;
 
@@ -21,6 +21,7 @@ import org.eclipse.che.api.promises.client.js.RejectFunction;
 import org.eclipse.che.api.promises.client.js.ResolveFunction;
 import org.eclipse.che.ide.api.command.CommandType;
 import org.eclipse.che.ide.api.command.CommandTypeRegistry;
+import org.eclipse.che.ide.command.CommandLocalizationConstants;
 
 import java.util.List;
 
@@ -32,9 +33,10 @@ import java.util.List;
  */
 public class CommandTypeChooser implements CommandTypeChooserView.ActionDelegate {
 
-    private final CommandTypeChooserView view;
-    private final CommandTypeRegistry    commandTypeRegistry;
-    private final PromiseProvider        promiseProvider;
+    private final CommandTypeChooserView       view;
+    private final CommandTypeRegistry          commandTypeRegistry;
+    private final PromiseProvider              promiseProvider;
+    private final CommandLocalizationConstants localizationConstants;
 
     private ResolveFunction<CommandType> resolveFunction;
     private RejectFunction               rejectFunction;
@@ -42,10 +44,12 @@ public class CommandTypeChooser implements CommandTypeChooserView.ActionDelegate
     @Inject
     public CommandTypeChooser(CommandTypeChooserView view,
                               CommandTypeRegistry commandTypeRegistry,
-                              PromiseProvider promiseProvider) {
+                              PromiseProvider promiseProvider,
+                              CommandLocalizationConstants localizationConstants) {
         this.view = view;
         this.commandTypeRegistry = commandTypeRegistry;
         this.promiseProvider = promiseProvider;
+        this.localizationConstants = localizationConstants;
 
         view.setDelegate(this);
     }
@@ -85,6 +89,6 @@ public class CommandTypeChooser implements CommandTypeChooserView.ActionDelegate
 
     @Override
     public void onCanceled() {
-        rejectFunction.apply(JsPromiseError.create("Command type selection has been canceled"));
+        rejectFunction.apply(JsPromiseError.create(localizationConstants.typeChooserMessageCanceled()));
     }
 }

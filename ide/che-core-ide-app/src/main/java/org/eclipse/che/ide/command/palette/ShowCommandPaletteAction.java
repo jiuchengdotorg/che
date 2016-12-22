@@ -15,6 +15,7 @@ import com.google.inject.Singleton;
 
 import org.eclipse.che.ide.api.action.Action;
 import org.eclipse.che.ide.api.action.ActionEvent;
+import org.eclipse.che.ide.command.CommandLocalizationConstants;
 
 /**
  * Action for opening Command Palette.
@@ -27,8 +28,11 @@ public class ShowCommandPaletteAction extends Action {
     private final CommandPalettePresenter presenter;
 
     @Inject
-    public ShowCommandPaletteAction(CommandPalettePresenter presenter) {
-        super("Command Palette", "Show Command Palette", null, null);
+    public ShowCommandPaletteAction(CommandLocalizationConstants localizationConstants, CommandPalettePresenter presenter) {
+        super(localizationConstants.paletteActionTitle(),
+              localizationConstants.paletteActionDescription(),
+              null,
+              null);
 
         this.presenter = presenter;
     }

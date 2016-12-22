@@ -9,7 +9,7 @@
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.che.ide.command.explorer;
+package org.eclipse.che.ide.command.type;
 
 import org.eclipse.che.ide.api.command.CommandType;
 import org.eclipse.che.ide.api.mvp.View;

@@ -8,7 +8,8 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
-package org.eclipse.che.ide.command;
+
+package org.eclipse.che.ide.command.type;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -16,6 +17,7 @@ import com.google.inject.Singleton;
 import org.eclipse.che.commons.annotation.Nullable;
 import org.eclipse.che.ide.api.command.CommandType;
 import org.eclipse.che.ide.api.command.CommandTypeRegistry;
+import org.eclipse.che.ide.command.CommandLocalizationConstants;
 import org.eclipse.che.ide.util.loging.Log;
 
 import java.util.ArrayList;
@@ -34,9 +36,12 @@ import static java.util.Collections.unmodifiableList;
 @Singleton
 public class CommandTypeRegistryImpl implements CommandTypeRegistry {
 
-    private final Map<String, CommandType> commandTypes;
+    private final CommandLocalizationConstants localizationConstants;
+    private final Map<String, CommandType>     commandTypes;
 
-    public CommandTypeRegistryImpl() {
+    @Inject
+    public CommandTypeRegistryImpl(CommandLocalizationConstants localizationConstants) {
+        this.localizationConstants = localizationConstants;
         this.commandTypes = new HashMap<>();
     }
 
@@ -46,7 +51,7 @@ public class CommandTypeRegistryImpl implements CommandTypeRegistry {
             final String id = type.getId();
 
             if (this.commandTypes.containsKey(id)) {
-                Log.warn(getClass(), "Command type with ID " + id + " is already registered.");
+                Log.warn(getClass(), localizationConstants.typeRegistryMessageAlreadyRegistered(id));
             } else {
                 this.commandTypes.put(id, type);
             }

@@ -8,7 +8,8 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
-package org.eclipse.che.ide.command.action;
+
+package org.eclipse.che.ide.command.execute;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;

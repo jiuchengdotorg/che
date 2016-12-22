@@ -9,7 +9,7 @@
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.che.ide.command.action;
+package org.eclipse.che.ide.command.execute;
 
 import org.eclipse.che.ide.api.command.ContextualCommand;
 

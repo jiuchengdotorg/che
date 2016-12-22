@@ -11,7 +11,10 @@
 
 package org.eclipse.che.ide.command.goal;
 
+import com.google.inject.Inject;
+
 import org.eclipse.che.ide.api.command.BaseCommandGoal;
+import org.eclipse.che.ide.command.CommandLocalizationConstants;
 
 /**
  * Represents predefined 'Test' goal.
@@ -20,7 +23,8 @@ import org.eclipse.che.ide.api.command.BaseCommandGoal;
  */
 public class TestGoal extends BaseCommandGoal {
 
-    public TestGoal() {
-        super("test", "test");
+    @Inject
+    public TestGoal(CommandLocalizationConstants localizationConstants) {
+        super(localizationConstants.goalTestId(), localizationConstants.goalTestName());
     }
 }

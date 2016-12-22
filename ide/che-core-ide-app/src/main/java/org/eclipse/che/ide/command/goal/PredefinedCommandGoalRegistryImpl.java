@@ -19,6 +19,7 @@ import com.google.inject.name.Named;
 import org.eclipse.che.commons.annotation.Nullable;
 import org.eclipse.che.ide.api.command.CommandGoal;
 import org.eclipse.che.ide.api.command.PredefinedCommandGoalRegistry;
+import org.eclipse.che.ide.command.CommandLocalizationConstants;
 import org.eclipse.che.ide.util.loging.Log;
 
 import java.util.ArrayList;
@@ -37,12 +38,16 @@ import static java.util.Collections.unmodifiableList;
 @Singleton
 public class PredefinedCommandGoalRegistryImpl implements PredefinedCommandGoalRegistry {
 
-    private final CommandGoal              defaultGoal;
-    private final Map<String, CommandGoal> commandGoals;
+    private final CommandGoal                  defaultGoal;
+    private final CommandLocalizationConstants localizationConstants;
+    private final Map<String, CommandGoal>     commandGoals;
 
     @Inject
-    public PredefinedCommandGoalRegistryImpl(@Named("default") CommandGoal defaultCommandGoal) {
+    public PredefinedCommandGoalRegistryImpl(@Named("default") CommandGoal defaultCommandGoal,
+                                             CommandLocalizationConstants localizationConstants) {
         defaultGoal = defaultCommandGoal;
+        this.localizationConstants = localizationConstants;
+
         commandGoals = new HashMap<>();
     }
 
@@ -52,7 +57,7 @@ public class PredefinedCommandGoalRegistryImpl implements PredefinedCommandGoalR
             final String id = type.getId();
 
             if (this.commandGoals.containsKey(id)) {
-                Log.warn(getClass(), "Command goal with ID " + id + " is already registered.");
+                Log.warn(getClass(), localizationConstants.goalMessageAlreadyRegistered(id));
             } else {
                 this.commandGoals.put(id, type);
             }

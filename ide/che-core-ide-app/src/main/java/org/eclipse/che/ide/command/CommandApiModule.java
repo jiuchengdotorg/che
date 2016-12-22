@@ -26,11 +26,11 @@ import org.eclipse.che.ide.api.command.ContextualCommandManager;
 import org.eclipse.che.ide.api.command.PredefinedCommandGoalRegistry;
 import org.eclipse.che.ide.api.component.Component;
 import org.eclipse.che.ide.api.filetypes.FileType;
-import org.eclipse.che.ide.command.action.CommandGoalPopUpGroupFactory;
-import org.eclipse.che.ide.command.action.ContextualCommandActionFactory;
-import org.eclipse.che.ide.command.action.ContextualCommandActionManager;
-import org.eclipse.che.ide.command.explorer.CommandTypeChooserView;
-import org.eclipse.che.ide.command.explorer.CommandTypeChooserViewImpl;
+import org.eclipse.che.ide.command.execute.CommandGoalPopUpGroupFactory;
+import org.eclipse.che.ide.command.execute.ContextualCommandActionFactory;
+import org.eclipse.che.ide.command.execute.ContextualCommandActionManager;
+import org.eclipse.che.ide.command.type.CommandTypeChooserView;
+import org.eclipse.che.ide.command.type.CommandTypeChooserViewImpl;
 import org.eclipse.che.ide.command.explorer.CommandsExplorerPresenter;
 import org.eclipse.che.ide.command.explorer.CommandsExplorerView;
 import org.eclipse.che.ide.command.explorer.CommandsExplorerViewImpl;
@@ -46,6 +46,7 @@ import org.eclipse.che.ide.command.palette.CommandPaletteView;
 import org.eclipse.che.ide.command.palette.CommandPaletteViewImpl;
 import org.eclipse.che.ide.command.producer.CommandProducerActionFactory;
 import org.eclipse.che.ide.command.producer.CommandProducerActionManager;
+import org.eclipse.che.ide.command.type.CommandTypeRegistryImpl;
 
 import static org.eclipse.che.ide.command.node.CommandFileNode.FILE_TYPE_EXT;
 
@@ -99,7 +100,7 @@ public class CommandApiModule extends AbstractGinModule {
     @Provides
     @Named("default")
     @Singleton
-    protected CommandGoal provideDefaultGoal() {
-        return new CommonGoal();
+    protected CommandGoal provideDefaultGoal(CommonGoal commonGoal) {
+        return commonGoal;
     }
 }
