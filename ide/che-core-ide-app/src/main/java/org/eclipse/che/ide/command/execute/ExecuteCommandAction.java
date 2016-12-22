@@ -39,7 +39,7 @@ import java.util.List;
  *
  * @author Artem Zatsarynnyi
  */
-class ContextualCommandAction extends Action {
+class ExecuteCommandAction extends Action {
 
     private final ContextualCommand command;
     private final CommandManager    commandManager;
@@ -48,12 +48,12 @@ class ContextualCommandAction extends Action {
     private final MachineChooser    machineChooser;
 
     @Inject
-    ContextualCommandAction(@Assisted ContextualCommand command,
-                            CommandManager commandManager,
-                            AppContext appContext,
-                            SelectionAgent selectionAgent,
-                            MachineChooser machineChooser,
-                            CommandUtils commandUtils) {
+    ExecuteCommandAction(@Assisted ContextualCommand command,
+                         CommandManager commandManager,
+                         AppContext appContext,
+                         SelectionAgent selectionAgent,
+                         MachineChooser machineChooser,
+                         CommandUtils commandUtils) {
         super(command.getName());
 
         this.command = command;

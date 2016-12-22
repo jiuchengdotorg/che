@@ -21,7 +21,7 @@ import org.eclipse.che.ide.api.resources.VirtualFile;
 import org.eclipse.che.ide.resource.Path;
 
 /**
- * Copy of the {@link SyntheticFile} which ability to update it's content
+ * Copy of the {@link SyntheticFile} with ability to update it's content
  * since {@link SyntheticFile} is read only.
  *
  * @author Artem Zatsarynnyi

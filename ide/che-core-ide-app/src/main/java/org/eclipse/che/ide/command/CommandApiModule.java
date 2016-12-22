@@ -32,9 +32,9 @@ import org.eclipse.che.ide.command.editor.page.editable.PageWithEditorView;
 import org.eclipse.che.ide.command.editor.page.editable.PageWithEditorViewImpl;
 import org.eclipse.che.ide.command.editor.page.info.InfoPageView;
 import org.eclipse.che.ide.command.editor.page.info.InfoPageViewImpl;
-import org.eclipse.che.ide.command.execute.CommandGoalPopUpGroupFactory;
-import org.eclipse.che.ide.command.execute.ContextualCommandActionFactory;
-import org.eclipse.che.ide.command.execute.ContextualCommandActionManager;
+import org.eclipse.che.ide.command.execute.GoalPopUpGroupFactory;
+import org.eclipse.che.ide.command.execute.ExecuteCommandActionFactory;
+import org.eclipse.che.ide.command.execute.ExecuteCommandActionManager;
 import org.eclipse.che.ide.command.explorer.CommandsExplorerPresenter;
 import org.eclipse.che.ide.command.explorer.CommandsExplorerView;
 import org.eclipse.che.ide.command.explorer.CommandsExplorerViewImpl;
@@ -84,10 +84,10 @@ public class CommandApiModule extends AbstractGinModule {
         componentBinder.addBinding("ContextualCommandManagerImpl").to(ContextualCommandManagerImpl.class);
         componentBinder.addBinding("CommandsExplorerPresenter").to(CommandsExplorerPresenter.class);
         componentBinder.addBinding("CommandProducerActionManager").to(CommandProducerActionManager.class);
-        componentBinder.addBinding("ContextualCommandActionManager").to(ContextualCommandActionManager.class);
+        componentBinder.addBinding("ExecuteCommandActionManager").to(ExecuteCommandActionManager.class);
 
-        install(new GinFactoryModuleBuilder().build(ContextualCommandActionFactory.class));
-        install(new GinFactoryModuleBuilder().build(CommandGoalPopUpGroupFactory.class));
+        install(new GinFactoryModuleBuilder().build(ExecuteCommandActionFactory.class));
+        install(new GinFactoryModuleBuilder().build(GoalPopUpGroupFactory.class));
         install(new GinFactoryModuleBuilder().build(NodeFactory.class));
         install(new GinFactoryModuleBuilder().build(CommandProducerActionFactory.class));
 

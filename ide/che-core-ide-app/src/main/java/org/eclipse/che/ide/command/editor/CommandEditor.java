@@ -64,6 +64,7 @@ public class CommandEditor extends AbstractEditorPresenter implements CommandEdi
     private final DialogFactory            dialogFactory;
     private final EditorAgent              editorAgent;
     private final CoreLocalizationConstant localizationConstants;
+    private final EditorMessages           messages;
 
     private final List<CommandEditorPage> pages;
 
@@ -83,7 +84,8 @@ public class CommandEditor extends AbstractEditorPresenter implements CommandEdi
                          NotificationManager notificationManager,
                          DialogFactory dialogFactory,
                          EditorAgent editorAgent,
-                         CoreLocalizationConstant localizationConstants) {
+                         CoreLocalizationConstant localizationConstants,
+                         EditorMessages messages) {
         this.view = view;
         this.workspaceAgent = workspaceAgent;
         this.iconRegistry = iconRegistry;
@@ -92,6 +94,7 @@ public class CommandEditor extends AbstractEditorPresenter implements CommandEdi
         this.dialogFactory = dialogFactory;
         this.editorAgent = editorAgent;
         this.localizationConstants = localizationConstants;
+        this.messages = messages;
 
         view.setDelegate(this);
 
@@ -207,7 +210,10 @@ public class CommandEditor extends AbstractEditorPresenter implements CommandEdi
         }).catchError(new Operation<PromiseError>() {
             @Override
             public void apply(PromiseError arg) throws OperationException {
-                notificationManager.notify("Unable to save command", arg.getMessage(), WARNING, EMERGE_MODE);
+                notificationManager.notify(messages.editorMessageUnableToSave(),
+                                           arg.getMessage(),
+                                           WARNING,
+                                           EMERGE_MODE);
 
                 callback.onFailure(arg.getCause());
 

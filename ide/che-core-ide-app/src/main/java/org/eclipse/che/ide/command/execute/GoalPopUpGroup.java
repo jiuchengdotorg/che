@@ -29,16 +29,16 @@ import org.vectomatic.dom.svg.ui.SVGResource;
  *
  * @author Artem Zatsarynnyi
  */
-class CommandGoalPopUpGroup extends DefaultActionGroup {
+class GoalPopUpGroup extends DefaultActionGroup {
 
     private final CommandGoal  commandGoal;
     private final IconRegistry iconRegistry;
 
     @Inject
-    CommandGoalPopUpGroup(@Assisted String commandGoalId,
-                          ActionManager actionManager,
-                          PredefinedCommandGoalRegistry predefinedCommandGoalRegistry,
-                          IconRegistry iconRegistry) {
+    GoalPopUpGroup(@Assisted String commandGoalId,
+                   ActionManager actionManager,
+                   PredefinedCommandGoalRegistry predefinedCommandGoalRegistry,
+                   IconRegistry iconRegistry) {
         super(actionManager);
 
         this.iconRegistry = iconRegistry;

@@ -35,45 +35,44 @@ import static org.eclipse.che.ide.api.action.IdeActions.GROUP_EDITOR_TAB_CONTEXT
 import static org.eclipse.che.ide.api.action.IdeActions.GROUP_MAIN_CONTEXT_MENU;
 
 /**
- * Distributes the {@link ContextualCommandAction}s over the context menus.
- * <p>Manages the actions for the contextual commands.
- * <p>Manager listens for creating/removing commands and adds/removes
- * related {@link ContextualCommandAction}s in the context menus.
+ * Manager listens for creating/removing commands and adds/removes
+ * related {@link ExecuteCommandAction}s in the context menus.
  *
  * @author Artem Zatsarynnyi
  */
 @Singleton
-public class ContextualCommandActionManager implements Component,
-                                                       CommandLoadedListener,
-                                                       CommandChangedListener {
+public class ExecuteCommandActionManager implements Component,
+                                                    CommandLoadedListener,
+                                                    CommandChangedListener {
 
-    private final ContextualCommandManager       commandManager;
-    private final ActionManager                  actionManager;
-    private final CommandsActionGroup            commandsActionGroup;
-    private final CommandGoalPopUpGroupFactory   commandGoalPopUpGroupFactory;
-    private final ContextualCommandActionFactory contextualCommandActionFactory;
-    private final PredefinedCommandGoalRegistry  predefinedCommandGoalRegistry;
+    private final ContextualCommandManager      commandManager;
+    private final ActionManager                 actionManager;
+    private final CommandsActionGroup           commandsActionGroup;
+    private final GoalPopUpGroupFactory         goalPopUpGroupFactory;
+    private final ExecuteCommandActionFactory   executeCommandActionFactory;
+    private final PredefinedCommandGoalRegistry predefinedCommandGoalRegistry;
 
     private final Map<String, Action>             command2Action;
     private final Map<String, DefaultActionGroup> commandGoalPopUpGroups;
 
     @Inject
-    public ContextualCommandActionManager(ContextualCommandManager commandManager,
-                                          ActionManager actionManager,
-                                          CommandsActionGroup commandsActionGroup,
-                                          CommandGoalPopUpGroupFactory commandGoalPopUpGroupFactory,
-                                          ContextualCommandActionFactory contextualCommandActionFactory,
-                                          PredefinedCommandGoalRegistry predefinedCommandGoalRegistry) {
+    public ExecuteCommandActionManager(ContextualCommandManager commandManager,
+                                       ActionManager actionManager,
+                                       CommandsActionGroup commandsActionGroup,
+                                       GoalPopUpGroupFactory goalPopUpGroupFactory,
+                                       ExecuteCommandActionFactory executeCommandActionFactory,
+                                       PredefinedCommandGoalRegistry predefinedCommandGoalRegistry) {
         this.commandManager = commandManager;
         this.actionManager = actionManager;
         this.commandsActionGroup = commandsActionGroup;
-        this.commandGoalPopUpGroupFactory = commandGoalPopUpGroupFactory;
-        this.contextualCommandActionFactory = contextualCommandActionFactory;
+        this.goalPopUpGroupFactory = goalPopUpGroupFactory;
+        this.executeCommandActionFactory = executeCommandActionFactory;
         this.predefinedCommandGoalRegistry = predefinedCommandGoalRegistry;
 
         command2Action = new HashMap<>();
         commandGoalPopUpGroups = new HashMap<>();
 
+        // TODO: move it to #start method
         commandManager.addCommandLoadedListener(this);
         commandManager.addCommandChangedListener(this);
 
@@ -107,7 +106,7 @@ public class ContextualCommandActionManager implements Component,
      * adds created action to the appropriate action group.
      */
     private void addAction(ContextualCommand command) {
-        final ContextualCommandAction action = contextualCommandActionFactory.create(command);
+        final ExecuteCommandAction action = executeCommandActionFactory.create(command);
 
         actionManager.registerAction("command_" + command.getName(), action);
         command2Action.put(command.getName(), action);
@@ -128,7 +127,7 @@ public class ContextualCommandActionManager implements Component,
         DefaultActionGroup commandGoalPopUpGroup = commandGoalPopUpGroups.get(goalId);
 
         if (commandGoalPopUpGroup == null) {
-            commandGoalPopUpGroup = commandGoalPopUpGroupFactory.create(goalId);
+            commandGoalPopUpGroup = goalPopUpGroupFactory.create(goalId);
 
             actionManager.registerAction("goal_" + goalId, commandGoalPopUpGroup);
             commandGoalPopUpGroups.put(goalId, commandGoalPopUpGroup);

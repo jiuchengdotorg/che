@@ -57,7 +57,9 @@ import static org.eclipse.che.ide.api.constraints.Anchor.AFTER;
  * @see CommandProducer
  */
 @Singleton
-public class CommandProducerActionManager implements MachineStateEvent.Handler, WsAgentStateHandler, Component {
+public class CommandProducerActionManager implements MachineStateEvent.Handler,
+                                                     WsAgentStateHandler,
+                                                     Component {
 
     private final ActionManager                actionManager;
     private final CommandProducerActionFactory commandProducerActionFactory;

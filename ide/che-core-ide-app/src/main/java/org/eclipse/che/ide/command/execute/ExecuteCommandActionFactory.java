@@ -14,12 +14,12 @@ package org.eclipse.che.ide.command.execute;
 import org.eclipse.che.ide.api.command.ContextualCommand;
 
 /**
- * Factory for creating {@link ContextualCommandAction} instances.
+ * Factory for creating {@link ExecuteCommandAction} instances.
  *
  * @author Artem Zatsarynnyi
  */
-public interface ContextualCommandActionFactory {
+public interface ExecuteCommandActionFactory {
 
-    /** Creates action for executing the specified {@code command}. */
-    ContextualCommandAction create(ContextualCommand command);
+    /** Creates new instance of {@link ExecuteCommandAction} for executing the specified {@code command}. */
+    ExecuteCommandAction create(ContextualCommand command);
 }

@@ -55,11 +55,11 @@ public class InfoPage extends AbstractCommandEditorPage implements InfoPageView.
     private final Map<Project, Boolean> projectsState;
 
     private String       goalInitial;
-    // initial value of the command's name
+    /** Initial value of the command's name. */
     private String       commandNameInitial;
-    // initial value of the workspace flag
+    /** Initial value of the workspace flag. */
     private boolean      workspaceInitial;
-    // initial value of the applicable projects list
+    /** Initial value of the applicable projects list. */
     private List<String> applicableProjectsInitial;
 
     @Inject

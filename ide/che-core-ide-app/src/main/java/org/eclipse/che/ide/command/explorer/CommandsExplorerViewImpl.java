@@ -54,6 +54,7 @@ public class CommandsExplorerViewImpl extends BaseView<CommandsExplorerView.Acti
 
     private final CommandsTreeRenderer                    treeRenderer;
     private final NodeFactory                             nodeFactory;
+    /** Mapping of the commands to the rendered tree nodes. */
     private final Map<ContextualCommand, CommandFileNode> commandNodes;
 
     @UiField(provided = true)
@@ -125,7 +126,7 @@ public class CommandsExplorerViewImpl extends BaseView<CommandsExplorerView.Acti
 
     @Nullable
     @Override
-    public CommandGoal getSelectedCommandGoal() {
+    public CommandGoal getSelectedGoal() {
         final List<Node> selectedNodes = tree.getSelectionModel().getSelectedNodes();
 
         if (!selectedNodes.isEmpty()) {

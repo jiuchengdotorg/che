@@ -8,7 +8,6 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
-
 package org.eclipse.che.ide.command.editor;
 
 import com.google.gwt.i18n.client.Messages;
@@ -23,14 +22,11 @@ public interface EditorMessages extends Messages {
     @Key("editor.description")
     String editorDescription();
 
+    @Key("editor.message.unable_save")
+    String editorMessageUnableToSave();
+
     @Key("button.save.text")
     String buttonSaveText();
-
-    @Key("page.arguments.title")
-    String pageArgumentsTitle();
-
-    @Key("page.arguments.tooltip")
-    String pageArgumentsTooltip();
 
     @Key("page.info.title")
     String pageInfoTitle();
@@ -58,6 +54,15 @@ public interface EditorMessages extends Messages {
 
     @Key("page.info.projects_table.header.applicable.label")
     String pageInfoProjectsTableHeaderApplicableLabel();
+
+    @Key("page.with_editor.explore_macros")
+    String pageWithEditorExploreMacros();
+
+    @Key("page.arguments.title")
+    String pageArgumentsTitle();
+
+    @Key("page.arguments.tooltip")
+    String pageArgumentsTooltip();
 
     @Key("page.preview_url.title")
     String pagePreviewUrlTitle();

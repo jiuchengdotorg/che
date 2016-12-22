@@ -47,7 +47,10 @@ public interface CommandEditorPage {
     /** Sets {@link DirtyStateListener}. */
     void setDirtyStateListener(DirtyStateListener listener);
 
-    /** Listener that should be called by page every time when any command modifications on the page have been performed. */
+    /**
+     * Listener that should be called by page every time when
+     * any command modifications on the page have been performed.
+     */
     interface DirtyStateListener {
         void onDirtyStateChanged();
     }

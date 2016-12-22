@@ -27,6 +27,8 @@ import org.eclipse.che.ide.api.command.CommandType;
 import org.eclipse.che.ide.api.command.ContextualCommand;
 import org.eclipse.che.ide.api.command.ContextualCommand.ApplicableContext;
 import org.eclipse.che.ide.api.command.ContextualCommandManager;
+import org.eclipse.che.ide.api.command.ContextualCommandManager.CommandChangedListener;
+import org.eclipse.che.ide.api.command.ContextualCommandManager.CommandLoadedListener;
 import org.eclipse.che.ide.api.command.PredefinedCommandGoalRegistry;
 import org.eclipse.che.ide.api.component.Component;
 import org.eclipse.che.ide.api.constraints.Constraints;
@@ -56,8 +58,8 @@ import static org.eclipse.che.ide.api.parts.PartStackType.NAVIGATION;
 @Singleton
 public class CommandsExplorerPresenter extends BasePresenter implements CommandsExplorerView.ActionDelegate,
                                                                         Component,
-                                                                        ContextualCommandManager.CommandChangedListener,
-                                                                        ContextualCommandManager.CommandLoadedListener {
+                                                                        CommandChangedListener,
+                                                                        CommandLoadedListener {
 
     private final CommandsExplorerView          view;
     private final CommandResources              resources;
@@ -67,7 +69,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
     private final NotificationManager           notificationManager;
     private final CommandTypeChooser            commandTypeChooser;
     private final CommandUtils                  commandUtils;
-    private final CommandLocalizationConstants  localizationConstants;
+    private final CommandLocalizationConstants  messages;
 
     private final RefreshViewTask refreshViewTask;
 
@@ -89,7 +91,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
         this.notificationManager = notificationManager;
         this.commandTypeChooser = commandTypeChooser;
         this.commandUtils = commandUtils;
-        this.localizationConstants = localizationConstants;
+        this.messages = localizationConstants;
 
         refreshViewTask = new RefreshViewTask();
 
@@ -116,7 +118,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
 
     @Override
     public String getTitle() {
-        return localizationConstants.explorerPartTitle();
+        return messages.explorerPartTitle();
     }
 
     @Override
@@ -127,7 +129,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
     @Nullable
     @Override
     public String getTitleToolTip() {
-        return localizationConstants.explorerPartTooltip();
+        return messages.explorerPartTooltip();
     }
 
     @Nullable
@@ -145,16 +147,16 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
         commandTypeChooser.show(left, top).then(new Operation<CommandType>() {
             @Override
             public void apply(CommandType selectedCommandType) throws OperationException {
-                final CommandGoal selectedCommandGoal = view.getSelectedCommandGoal();
+                final CommandGoal selectedGoal = view.getSelectedGoal();
 
-                if (selectedCommandType != null && selectedCommandGoal != null) {
-                    commandManager.createCommand(selectedCommandGoal.getId(),
+                if (selectedGoal != null) {
+                    commandManager.createCommand(selectedGoal.getId(),
                                                  selectedCommandType.getId(),
                                                  defaultApplicableContext)
                                   .catchError(new Operation<PromiseError>() {
                                       @Override
                                       public void apply(PromiseError arg) throws OperationException {
-                                          notificationManager.notify(localizationConstants.explorerMessageUnableCreate(),
+                                          notificationManager.notify(messages.explorerMessageUnableCreate(),
                                                                      arg.getMessage(),
                                                                      FAIL,
                                                                      EMERGE_MODE);
@@ -175,7 +177,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
         }).catchError(new Operation<PromiseError>() {
             @Override
             public void apply(PromiseError arg) throws OperationException {
-                notificationManager.notify(localizationConstants.explorerMessageUnableDuplicate(),
+                notificationManager.notify(messages.explorerMessageUnableDuplicate(),
                                            arg.getMessage(),
                                            FAIL,
                                            EMERGE_MODE);
@@ -188,7 +190,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
         commandManager.removeCommand(command.getName()).catchError(new Operation<PromiseError>() {
             @Override
             public void apply(PromiseError arg) throws OperationException {
-                notificationManager.notify(localizationConstants.explorerMessageUnableRemove(),
+                notificationManager.notify(messages.explorerMessageUnableRemove(),
                                            arg.getMessage(),
                                            FAIL,
                                            EMERGE_MODE);
