@@ -34,6 +34,7 @@ import org.eclipse.che.ide.api.notification.NotificationManager;
 import org.eclipse.che.ide.api.parts.WorkspaceAgent;
 import org.eclipse.che.ide.api.parts.base.BasePresenter;
 import org.eclipse.che.ide.command.CommandLocalizationConstants;
+import org.eclipse.che.ide.command.CommandResources;
 import org.eclipse.che.ide.command.CommandUtils;
 import org.eclipse.che.ide.command.type.CommandTypeChooser;
 import org.vectomatic.dom.svg.ui.SVGResource;
@@ -59,7 +60,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
                                                                         ContextualCommandManager.CommandLoadedListener {
 
     private final CommandsExplorerView          view;
-    private final CommandsExplorerResources     resources;
+    private final CommandResources              resources;
     private final WorkspaceAgent                workspaceAgent;
     private final ContextualCommandManager      commandManager;
     private final PredefinedCommandGoalRegistry goalRegistry;
@@ -72,7 +73,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
 
     @Inject
     public CommandsExplorerPresenter(CommandsExplorerView view,
-                                     CommandsExplorerResources commandsExplorerResources,
+                                     CommandResources commandResources,
                                      WorkspaceAgent workspaceAgent,
                                      ContextualCommandManager commandManager,
                                      PredefinedCommandGoalRegistry predefinedCommandGoalRegistry,
@@ -81,7 +82,7 @@ public class CommandsExplorerPresenter extends BasePresenter implements Commands
                                      CommandUtils commandUtils,
                                      CommandLocalizationConstants localizationConstants) {
         this.view = view;
-        this.resources = commandsExplorerResources;
+        this.resources = commandResources;
         this.workspaceAgent = workspaceAgent;
         this.commandManager = commandManager;
         this.goalRegistry = predefinedCommandGoalRegistry;

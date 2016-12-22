@@ -26,6 +26,7 @@ import org.eclipse.che.ide.api.command.ContextualCommand;
 import org.eclipse.che.ide.api.data.tree.Node;
 import org.eclipse.che.ide.api.parts.base.BaseView;
 import org.eclipse.che.ide.command.CommandLocalizationConstants;
+import org.eclipse.che.ide.command.CommandResources;
 import org.eclipse.che.ide.command.node.CommandFileNode;
 import org.eclipse.che.ide.command.node.CommandGoalNode;
 import org.eclipse.che.ide.command.node.NodeFactory;
@@ -61,14 +62,12 @@ public class CommandsExplorerViewImpl extends BaseView<CommandsExplorerView.Acti
     @Inject
     public CommandsExplorerViewImpl(org.eclipse.che.ide.Resources coreResources,
                                     CommandLocalizationConstants localizationConstants,
-                                    CommandsExplorerResources resources,
+                                    CommandResources resources,
                                     NodeFactory nodeFactory) {
         super(coreResources);
 
         this.nodeFactory = nodeFactory;
         commandNodes = new HashMap<>();
-
-        resources.commandsExplorerCss().ensureInjected();
 
         setTitle(localizationConstants.explorerViewTitle());
 

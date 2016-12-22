@@ -17,6 +17,7 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 
 import org.eclipse.che.ide.api.data.tree.Node;
+import org.eclipse.che.ide.command.CommandResources;
 import org.eclipse.che.ide.command.node.CommandFileNode;
 import org.eclipse.che.ide.command.node.CommandGoalNode;
 import org.eclipse.che.ide.ui.smartTree.Tree;
@@ -33,11 +34,13 @@ import static com.google.gwt.user.client.Event.ONCLICK;
  */
 class CommandsTreeRenderer extends DefaultPresentationRenderer<Node> {
 
-    private final CommandsExplorerResources resources;
+    private final CommandResources resources;
 
     private CommandsExplorerView.ActionDelegate delegate;
 
-    CommandsTreeRenderer(TreeStyles treeStyles, CommandsExplorerResources resources, CommandsExplorerView.ActionDelegate delegate) {
+    CommandsTreeRenderer(TreeStyles treeStyles,
+                         CommandResources resources,
+                         CommandsExplorerView.ActionDelegate delegate) {
         super(treeStyles);
 
         this.resources = resources;
@@ -53,7 +56,7 @@ class CommandsTreeRenderer extends DefaultPresentationRenderer<Node> {
 
             nodeContainerElement.addClassName(resources.commandsExplorerCss().categorySubElementHeader());
 
-            final SpanElement removeCommandButton = createButton(resources.removeCommandButton());
+            final SpanElement removeCommandButton = createButton(resources.removeCommand());
             Event.setEventListener(removeCommandButton, new EventListener() {
                 @Override
                 public void onBrowserEvent(Event event) {
@@ -64,7 +67,7 @@ class CommandsTreeRenderer extends DefaultPresentationRenderer<Node> {
                 }
             });
 
-            final SpanElement duplicateCommandButton = createButton(resources.duplicateCommandButton());
+            final SpanElement duplicateCommandButton = createButton(resources.duplicateCommand());
             Event.setEventListener(duplicateCommandButton, new EventListener() {
                 @Override
                 public void onBrowserEvent(Event event) {
@@ -88,7 +91,7 @@ class CommandsTreeRenderer extends DefaultPresentationRenderer<Node> {
 
             nodeContainerElement.addClassName(resources.commandsExplorerCss().categoryHeader());
 
-            final SpanElement addCommandButton = createButton(resources.addCommandButton());
+            final SpanElement addCommandButton = createButton(resources.addCommand());
             Event.setEventListener(addCommandButton, new EventListener() {
                 @Override
                 public void onBrowserEvent(Event event) {

@@ -15,8 +15,7 @@ import com.google.gwt.resources.client.CssResource.NotStrict;
 import com.google.gwt.resources.client.TextResource;
 
 import org.eclipse.che.ide.api.parts.PartStackUIResources;
-import org.eclipse.che.ide.command.explorer.CommandsExplorerResources;
-import org.eclipse.che.ide.command.palette.CommandPaletteResources;
+import org.eclipse.che.ide.command.CommandResources;
 import org.eclipse.che.ide.menu.MenuResources;
 import org.eclipse.che.ide.notification.NotificationResources;
 import org.eclipse.che.ide.projecttype.wizard.ProjectWizardResources;
@@ -49,8 +48,7 @@ public interface Resources extends Tree.Resources,
                                    CategoriesList.Resources,
                                    ButtonLoaderResources,
                                    ProjectWizardResources,
-                                   CommandsExplorerResources,
-                                   CommandPaletteResources {
+                                   CommandResources {
 
     @Source({"Core.css", "org/eclipse/che/ide/ui/constants.css", "org/eclipse/che/ide/api/ui/style.css"})
     @NotStrict
@@ -183,7 +181,7 @@ public interface Resources extends Tree.Resources,
     SVGResource cheLogo();
 
     @Source("command/explorer/remove-command-button.svg")
-    SVGResource removeCommandButton();
+    SVGResource removeCommand();
 
     /** Interface for css resources. */
     interface CoreCss extends CssResource {
