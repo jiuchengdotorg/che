@@ -52,7 +52,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
-import static org.eclipse.che.ide.extension.machine.client.command.edit.EditCommandsPresenter.PREVIEW_URL_ATTR;
+import static org.eclipse.che.api.workspace.shared.Constants.COMMAND_PREVIEW_URL_ATTRIBUTE_NAME;
 
 /**
  * Console for command output.
@@ -110,7 +110,7 @@ public class CommandOutputConsolePresenter implements CommandOutputConsole, Outp
 
         view.setDelegate(this);
 
-        final String previewUrl = command.getAttributes().get(PREVIEW_URL_ATTR);
+        final String previewUrl = command.getAttributes().get(COMMAND_PREVIEW_URL_ATTRIBUTE_NAME);
         if (!isNullOrEmpty(previewUrl)) {
             macroProcessor.expandMacros(previewUrl).then(new Operation<String>() {
                 @Override

@@ -152,6 +152,18 @@ public class ContextualCommandManagerImpl implements ContextualCommandManager,
         return list;
     }
 
+    @Nullable
+    @Override
+    public ContextualCommand getCommand(String name) {
+        for (ContextualCommand command : commands.values()) {
+            if (name.equals(command.getName())) {
+                return command;
+            }
+        }
+
+        return null;
+    }
+
     @Override
     public Promise<ContextualCommand> createCommand(String goalId, String commandTypeId, ApplicableContext applicableContext) {
         final CommandType commandType = commandTypeRegistry.getCommandTypeById(commandTypeId);

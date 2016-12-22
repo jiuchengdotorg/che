@@ -15,9 +15,10 @@ import com.google.inject.Inject;
 import org.eclipse.che.ide.api.action.Action;
 import org.eclipse.che.ide.api.action.ActionEvent;
 import org.eclipse.che.ide.api.app.AppContext;
-import org.eclipse.che.ide.extension.machine.client.MachineLocalizationConstant;
-import org.eclipse.che.ide.api.command.CommandManager;
 import org.eclipse.che.ide.api.command.CommandImpl;
+import org.eclipse.che.ide.api.command.CommandManager;
+import org.eclipse.che.ide.api.command.ContextualCommandManager;
+import org.eclipse.che.ide.extension.machine.client.MachineLocalizationConstant;
 import org.eclipse.che.ide.util.loging.Log;
 
 
@@ -30,17 +31,17 @@ public class RunCommandAction extends Action {
 
     public static final String NAME_PARAM_ID = "name";
 
-    private final SelectCommandComboBox       selectCommandAction;
+    private final ContextualCommandManager    contextualCommandManager;
     private final CommandManager              commandManager;
     private final AppContext                  appContext;
     private final MachineLocalizationConstant localizationConstant;
 
     @Inject
-    public RunCommandAction(SelectCommandComboBox selectCommandAction,
+    public RunCommandAction(ContextualCommandManager contextualCommandManager,
                             MachineLocalizationConstant localizationConstant,
                             CommandManager commandManager,
                             AppContext appContext) {
-        this.selectCommandAction = selectCommandAction;
+        this.contextualCommandManager = contextualCommandManager;
         this.localizationConstant = localizationConstant;
         this.commandManager = commandManager;
         this.appContext = appContext;
@@ -59,7 +60,7 @@ public class RunCommandAction extends Action {
             return;
         }
 
-        final CommandImpl command = selectCommandAction.getCommandByName(name);
+        final CommandImpl command = contextualCommandManager.getCommand(name);
         if (command != null) {
             commandManager.executeCommand(command, appContext.getDevMachine().getDescriptor());
         }

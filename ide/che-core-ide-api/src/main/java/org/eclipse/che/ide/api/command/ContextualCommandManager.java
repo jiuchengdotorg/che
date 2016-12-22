@@ -11,6 +11,7 @@
 package org.eclipse.che.ide.api.command;
 
 import org.eclipse.che.api.promises.client.Promise;
+import org.eclipse.che.commons.annotation.Nullable;
 import org.eclipse.che.ide.api.command.ContextualCommand.ApplicableContext;
 
 import java.util.List;
@@ -27,8 +28,12 @@ import java.util.List;
  */
 public interface ContextualCommandManager {
 
-    /** Returns workspace commands. */
+    /** Returns commands. */
     List<ContextualCommand> getCommands();
+
+    /** Returns command by the specified name or {@code null} if none. */
+    @Nullable
+    ContextualCommand getCommand(String name);
 
     /**
      * Creates new command of the specified type with the given {@link ApplicableContext}.

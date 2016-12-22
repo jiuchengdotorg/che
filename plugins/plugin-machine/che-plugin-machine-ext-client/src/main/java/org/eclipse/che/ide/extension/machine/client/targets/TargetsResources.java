@@ -8,49 +8,37 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
-package org.eclipse.che.ide.extension.machine.client.command.edit;
+package org.eclipse.che.ide.extension.machine.client.targets;
 
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-import com.google.gwt.resources.client.DataResource;
 
 import org.vectomatic.dom.svg.ui.SVGResource;
 
 
 /**
- * Class contains references to resources which need to correct displaying of command wizard dialog.
+ * Class contains references to resources which need to correct displaying of targets dialog.
  *
  * @author Oleksii Orel
  */
-public interface EditCommandResources extends ClientBundle {
+public interface TargetsResources extends ClientBundle {
 
-    interface EditCommandStyles extends CssResource {
+    interface EditTargetsStyles extends CssResource {
 
         String categoryHeader();
 
         String categorySubElementHeader();
 
-        String hintLabel();
-
         String buttonArea();
 
         String running();
-
-        String filterPlaceholder();
     }
 
-    @Source({"CommandRenderer.css", "org/eclipse/che/ide/api/ui/style.css"})
-    EditCommandStyles getCss();
-
-    @DataResource.MimeType("image/svg+xml")
-    @Source("find-icon.svg")
-    DataResource findIcon();
+    @Source({"TargetRenderer.css", "org/eclipse/che/ide/api/ui/style.css"})
+    EditTargetsStyles getCss();
 
     @Source("add-command-button.svg")
     SVGResource addCommandButton();
-
-    @Source("duplicate-command-button.svg")
-    SVGResource duplicateCommandButton();
 
     @Source("remove-command-button.svg")
     SVGResource removeCommandButton();

@@ -18,7 +18,7 @@ import com.google.gwt.resources.client.DataResource;
 import org.vectomatic.dom.svg.ui.SVGResource;
 
 /**
- * Client bundle for command-related resources.
+ * Client bundle for command related resources.
  *
  * @author Artem Zatsarynnyi
  */
